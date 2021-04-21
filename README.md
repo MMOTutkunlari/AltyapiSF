@@ -44,6 +44,10 @@ Server files kanallarının oluşturulması
 > cd /home/AltyapiSF                                                                                                                                                   
 > sh gen.sh
 
+Questlerin derlenmesi
+> cd /home/AltyapiSF/share/locale/turkey/quest                                                                                                                         
+> sh gen.sh
+
 Oyunu başlatmak
 > cd /home/AltyapiSF                                                                                                                                                   
 > sh start.sh
