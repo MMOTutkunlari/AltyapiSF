@@ -31,21 +31,21 @@ Server filesi git ile çekin.
 > git clone https://github.com/MMOTutkunlari/AltyapiSF.git
 
 İlk önce veritabanına oyunun tablolarını ekliyoruz.
-> cd /home/AltyapiSF/sql/
-> sh install.sh
+> cd /home/AltyapiSF/sql/                                                                                                                                               
+> sh install.sh                                                                                                                                                         
 > Veritabanı şifrenizi girin: <buraya mysql'u oluştururken tanımladığınız şifreyi girin.>
 
 Derlediğiniz çekirdek dosyalarını filese tanımlayın
-> cd /home/AltyapiSF/share/bin
-> ln -s /home/AltyapiSF/Srcs/Server/game/game_r40020 game
+> cd /home/AltyapiSF/share/bin                                                                                                                                         
+> ln -s /home/AltyapiSF/Srcs/Server/game/game_r40020 game                                                                                                               
 > ln -s /home/AltyapiSF/Srcs/Server/db/db_r400200 db
 
 Server files kanallarının oluşturulması
-> cd /home/AltyapiSF
+> cd /home/AltyapiSF                                                                                                                                                   
 > sh gen.sh
 
 Oyunu başlatmak
-> cd /home/AltyapiSF
+> cd /home/AltyapiSF                                                                                                                                                   
 > sh start.sh
 
 ### Sonra neler yapacağım? ###
