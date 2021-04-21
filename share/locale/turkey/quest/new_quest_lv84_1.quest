@@ -1,0 +1,91 @@
+quest prince_kharoon begin
+	state start begin
+	end
+	
+	state run begin
+		when letter with pc.level >= 84 begin
+		set_state(info)
+		end
+	end
+	
+	state info begin
+		when letter begin
+		send_letter("Prens Kharoon")
+		end
+		
+		when button or info begin
+		say_title("Prens Kharoon")
+		say("Prens Kharoon'u yen ve Lee Chung'a sonuçlarý ")
+		say("rapor et.")
+		end
+	end
+	
+	state finito begin
+		when letter begin
+		local v = find_npc_by_vnum(20369)
+			if v != 0 then
+			target.vid("__TARGET__", v, "LeeChung")
+			end
+		send_letter("Tamamlanmamýþ Hikaye")
+		end
+			
+		when button or info begin
+		say_title("Tamamlanmamýþ Hikaye")
+		say("Lee Chung'a git ve Banshee'den tehditkar")
+		say("mesajýnýn raporunu ver.")
+		end
+			
+		when 20369.chat."Tamamlanmamýþ Hikaye" begin
+		target.delete("__TARGET__")
+		say("Kumandana Tartarus ve Kharoon karþýsýndaki")
+		say("zaferinin raporunu verdikten sonra Banshee'nin")
+		say("can sýkýcý mesajýný tekrarlýyorsun.")
+		say("Ciddi bir ifadeyle konuþmaya baþlýyor:")
+		wait()
+		say_title("Lee Chung:")
+		say("Agwi Prensini alaþaðý edeceðimizi, Karanlýðýn")
+		say("Köleleri ve Banshee'lerin planlarýna engel")
+		say("olacaðýmýzý düþünmüþtüm. Yanlýþ düþünmüþüm...")
+		wait()
+		say_title("Lee Chung:")
+		say("Banshee Azraille birlikte Agwilerin karanlýk")
+		say("Kralý Ejderha Tanrýsý Sung Mahi'nin yeniden")
+		say("diriliþini saðlamýþ olmalý. Düþündükçe")
+		say("ürküyorum...")
+		wait()
+		say_title("Lee Chung:")
+		say("Kötü Ejderhalarýn uyuduklarý ada...")
+		say("Hm, Karanlýk Ejderha Kayasý kastediliyor olmalý.")
+		say("Buradan çok uzakta keþfedilmemiþ bir ada.")
+		say("Ýstediðimizi elde edemedik ama sana yinede büyük")
+		say("bir teþekkür boçluyuz. Sen olmasaydýn Þeytan")
+		say("Katakombu'nun derinliklerindeki bu felaketin")
+		say("sebebini hiç öðrenemeyecektik.")
+		wait()
+		say_title("Lee Chung:")
+		say("Gerçekten büyük iþ baþardýn, senden baþka kimse")
+		say("bunu yapamazdý. Bana ne zaman ihtiyacýn olursa,")
+		say("hep yanýnda olacaðým. Hoþçakal!")
+		wait()
+		say_title("Ödül")
+		say_reward("84.000.000 deneyim puaný kazandýn.")
+		say_reward("250000 Yang kazandýn.")
+		say_reward("Demirci Taþý 2 adet kazandýn.")
+		say_reward("Cesaret Pelerini kazandýn.")
+		say_reward("Yaþam Meyvesi kazandýn.")
+		pc.give_exp2("84000000")
+		pc.change_gold("250000")
+		pc.give_item2("71025",1)
+		pc.give_item2("71025",1)
+		pc.give_item2("70038",1)
+		pc.give_item2("71107",1)
+		pc.give_item2("53005",1)   --- extra
+		clear_letter()
+		set_state(complete)
+		end
+	end
+
+		state complete begin
+	end
+end
+			

@@ -1,0 +1,181 @@
+quest the_last_matter begin
+	state start begin
+	end
+	
+	state run begin
+		when letter with pc.level >= 78 begin
+		set_state(info)
+		end
+	end
+	
+	state info begin
+		when letter begin
+		local v = find_npc_by_vnum(20369)
+			if v != 0 then
+			target.vid("__TARGET__", v, "LeeChung")
+			end
+		send_letter("Son Madde ")
+		end
+		
+		when button or info begin
+		say_title("Son Madde")
+		say("Lee Chung ve büyücüler meclisi son madde olan")
+		say("kutsanmýþ aðaç reçinesinin kýrmýzý kötü ")
+		say("aðaçlardan elde")
+		say("edilebileceðini saptadý. Kýrmýzý Orman'da")
+		say("kýrmýzý kötü aðaç avýna çýk ve 100 porsiyon")
+		say("kutsanmýþ aðaç reçinesi topla.")
+		say("Yalnýz önce mutlaka Lee Chung'la konuþ.")
+		say("")
+		end
+		
+		when 20369 chat."Son Madde" begin
+		target.delete("__TARGET__")
+			if pc.count_item("31004") < 100 then
+			say_title("Lee Chung:")
+			say("Lee Chung ve büyücüler meclisi son madde olan")
+			say("kutsanmýþ aðaç reçinesinin kýrmýzý kötü ")
+			say("aðaçlardan elde")
+			say("edilebileceðini saptadý. Kýrmýzý Orman'da")
+			say("kýrmýzý kötü aðaç avýna çýk ve 100 porsiyon")
+			say("kutsanmýþ aðaç reçinesi topla.")
+			say("")
+			wait()
+			say_title("Lee Chung:")
+			say("Bu gökyüzü gözyaþý üretiminin son aþamasý.")
+			say("Kendine dikkat et, Kýrmýzý Orman öldürücü yaratýk")
+			say("kaynýyor.")
+			say("")
+			else
+			say_title("Lee Chung:")
+			say("Kutsanmýþ aðaç reçinesi mi bu? Muazzam gücünü ")
+			say("hissedebiliyorum. Harika! Ne yazýk ki bir çok")
+			say("büyücüyü göreve göndermek zorunda kaldým. Bir")
+			say("süre burada olmayacaklar. Memleketinde Baek-Go")
+			say("adýnda bir eczacý yok mu?")
+			wait()
+			say_title(""..pc.get_name()..":")
+			say("Evet, gerçekten de var.")
+			wait()
+			say_title("Lee Chung:")
+			say("Ah, iyi denk geldi! Bu üç maddeyi al ve")
+			say("Baek-Go'ya geri götür. Bunlardan gökyüzünün")
+			say("gözyaþýný elde edebilir.")
+			wait()
+			say_title("Lee Chung:")
+			say("Yorucu bir yolculuk geçirdin. Lütfen bu ödülü ")
+			say("çabalarýnýn bir karþýlýðý olarak kabul et.")
+			wait()
+			say_title("Ödül")
+			say_reward("48000000 deneyim puaný kazandýn.")
+			say_reward("230000 Yang kazandýn.")
+			say_reward("Ay Özütü (B) kazandýn.")
+			say_reward("Büyülü Bakýr kazandýn.")
+			say_reward("Liderin Kitabý kazandýn.")
+			pc.give_exp2("48000000")
+			pc.change_gold("230000")
+			pc.give_item2("72729",1)
+			pc.give_item2("70035",1)
+			pc.give_item2("72045",1)
+			pc.give_item2("53008",1) --- Knuud
+			pc.remove_item("31004",100)
+			set_state(baekgo)
+			return
+			end
+		end
+		
+		when kill begin
+		if npc.get_race() == 2315 then
+		local chance = number(1,70)
+			if chance == 5 then
+			pc.give_item2("31004",1)
+				if pc.count_item("31004") >= 100 then
+				notice("Yeterince kutsanmýþ aðaç reçinesi buldun. Bunlarý ")
+				notice("Kumandan Lee Chung'a götür.")
+				else
+				notice(""..100 - pc.count_item("31004").." porsiyon kutsanmýþ aðaç reçinesi daha toplaman")
+				notice("gerekiyor.")
+				end
+				end
+			end
+		end
+	end
+	
+	state baekgo begin
+		when letter begin
+		local v = find_npc_by_vnum(20018) ---baek go
+			if v != 0 then
+			target.vid("__TARGET1__", v, "baekgo")
+			end
+		send_letter("Gökyüzünün Gözyaþý ")
+		end
+		
+		when button or info begin
+		say_title("Gökyüzünün Gözyaþý ")
+		say("Lütfen memleketine geri dön, Baek-Go'yu bul ve")
+		say("Lee Chung adýna ondan bu üç maddeyle gökyüzünün")
+		say("gözyaþýný oluþturmasýný rica et.")
+		end
+		
+		when 20018.chat."Gökyüzünün Gözyaþý " begin
+		target.delete("__TARGET1__")
+		say_title("Baek-Go:")
+		say("Uzun zamandýr yoktun. Sana bir þey oldu diye")
+		say("endiþelendim. Seni bana getiren nedir?")
+		wait()
+		say_title(""..pc.get_name()..":")
+		say("Lee Chung beni senden bir þey rica etmekle")
+		say("görevlendirdi.")
+		wait()
+		say_title("Baek-Go:")
+		say("Lee Chung mu?! Gölge Savaþçýlarý Kumanda... ay,")
+		say("þþtt! Sessiz! Önünde bir Gölge Savaþçýsý duruyor.")
+		say("ama çok gizli ve köydeki kimse bunu duymamalý.")
+		say("Lee Chung'un ricasý ne?")
+		wait()
+		say_title(""..pc.get_name()..":")
+		say("Bu üç maddeyle gökyüzünün gözyaþýný oluþturmaný ")
+		say("istiyor.")
+		wait()
+		say_title("Baek-Go:")
+		say("Gökyüzünün gözyaþý demek... Emrinde o kadar çok")
+		say("büyücü var ki, en zor görevleri neden hep bana")
+		say("veriyor?")
+		say("...")
+		say("Neyse. Ýþte-gökyüzünün gözyaþý. Olaðanüstü güzel!")
+		say("Onu elçiyle doðrudan Lee Chung'a gönderirim, her")
+		say("hazýr olduðunda sana haber verir.")
+		say("Bana ne iþe yaradýðýný anlatýr mýsýn?")
+		wait()
+		say_title(""..pc.get_name()..":")
+		say("Ne yazýk ki sana daha fazla ayrýntý anlatamam.")
+		say("Sadece þunu bil yeter: Bu taþ þeytan ve diðer")
+		say("kötü varlýklarý defetmek için kutsal güçleri")
+		say("çaðýrýyor.")
+		wait()
+		say_title("Baek-Go:")
+		say("Çok ilginç. Sana görevinde baþarýlar dilerim.")
+		say("Kahramanlýklarýnýn ödülü olarak iki küçülen kafa")
+		say("alacaksýn. Bir baþka gökyüzünün gözyaþýna daha")
+		say("ihtiyaç duyduðunda bana gelebilirsin, nasýlsa")
+		say("nasýl yapýlacaðýný biliyorum.")
+		say("Aa, bir de Lee Chung'a sevgi ve selamlarýmý ilet")
+		say("lütfen.")
+		wait()
+		say_title("Ödül")
+		say_reward("Küçülen Kafa 2 adet kazandýn.")
+		pc.give_item2("30319",2)
+		wait()
+		say("Seviye 84'e ulaþtýðýnda macera devam edecek.")
+		clear_letter()
+		set_quest_state("the_war_begins","run")
+		set_state(complete)
+		return
+		end
+	end
+	
+	state complete begin
+	end
+end
+		
+		

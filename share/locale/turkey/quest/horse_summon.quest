@@ -1,0 +1,301 @@
+quest horse_summon begin
+        state start begin
+
+function get_horse_summon_prob_pct()
+        local skill_level=pc.get_skill_level(131)
+        if skill_level==1 then
+                return 15
+        elseif skill_level==2 then
+                return 20
+        elseif skill_level==3 then
+                return 30
+        elseif skill_level==4 then
+                return 40
+        elseif skill_level==5 then
+                return 50
+        elseif skill_level==6 then
+                return 60
+        elseif skill_level==7 then
+                return 70
+        elseif skill_level==8 then
+                return 80
+        elseif skill_level==9 then
+                return 90
+        elseif skill_level>=10 then
+                return 100
+        end
+        return 10
+end
+
+
+                when 20349.chat."Yeni At Resmi" with horse.get_grade()==1 and pc.countitem("50051")<1 begin
+                        say_title("Seyis:")
+                        say("")
+                        ----"12345678901234567890123456789012345678901234567890"|
+                        say("Binici resmini kaybettin.")
+                        say("Bana 10.000 Yang verirsen sana ")
+                        say("yenisini verebilirim.")
+                        say("")
+                        local b=select("Al", "Alma")
+                        if 1==b then
+                                if pc.money>=10000 then
+                                        pc.changemoney(-10000)
+                                        say_title("Seyis:")
+                                        say("")
+                                        ----"12345678901234567890123456789012345678901234567890"|
+                                        say("Bu yeni binici resmin.")
+                                        say("Tekrar kaybetme!")
+                                        pc.give_item2("50051", 1)
+                                else
+                                        say_title("Seyis:")
+                                        say("")
+                                        ----"12345678901234567890123456789012345678901234567890"|
+                                        say("Yeterli Yang'ýn yok.")
+                                        say("")
+                                end
+                        elseif 2==b then
+                        else
+                                say("UNBEKANNTE TASTE ["..b.."]")
+                        end
+                end
+                when 20349.chat."Yeni Zýrhlý At Kitabý " with horse.get_grade()==2 and pc.countitem("50052")<1 begin
+                        say_title("Seyis:")
+                        say("")
+                        ----"12345678901234567890123456789012345678901234567890"|
+                        say("Zýrhlý At Kitabýný kaybettin!")
+                        say("50.000 Yang'a sana yenisini ")
+                        say("verebilirim.")
+                        say("")
+                        local b=select("Kabul", "Vazgeç ")
+                        if 1==b then
+                                if pc.money>=50000 then
+                                        pc.changemoney(-50000)
+                                        say_title("Ahýr Görevlisi:")
+                                        say("")
+                                        -----------"12345678901234567890123456789012345678901234567890"|
+                                        say("Bu Yeni Zýrhlý At Kitabýn.")
+                                        say("Tekrar kaybetme!")
+                                        pc.give_item2("50052", 1)
+                                else
+                                        say("Yeterli Yang'ýn yok.")
+                                end
+                        elseif 2==b then
+                        else
+                                say("UNBEKANNTE TASTE ["..b.."]")
+                        end
+                end
+                when 20349.chat."Yeni Asker At Kitabý " with horse.get_grade()==3 and pc.countitem("50053")<1 begin
+                        say_title("Seyis:")
+                        say("")
+                        ----"12345678901234567890123456789012345678901234567890"|
+                        say("Asker At Kitabýný kaybettin!")
+                        say("100.000 Yang'a sana yenisini verebilirim.")
+                        say("")
+                        local b=select("Kabul", "Vazgeç ")
+                        if 1==b then
+                                if pc.money>=100000 then
+                                        pc.changemoney(-100000)
+                                        say_title("Bilgi:")
+                                        say("")
+                                        ----"12345678901234567890123456789012345678901234567890"|
+                                        say("Bu yeni Asker At Kitabýn.")
+                                        say("Onu yine kaybetme!")
+                                        say("")
+                                        pc.give_item2("50053", 1)
+                                else
+                                        say_title("Seyis:")
+                                        say("")
+                                        ----"12345678901234567890123456789012345678901234567890"|
+                                        say("Yeterli Yang'ýn yok.")
+                                end
+                        elseif 2==b then
+                        else
+                                say("UNBEKANNTE TASTE ["..b.."]")
+                        end
+                end
+                when 50051.use with horse.get_grade()==0 begin
+                        say_title("Bilgi:")
+                        say("")
+                        ----"12345678901234567890123456789012345678901234567890"|
+                        say("Acemi at çaðýrmak için;")
+                        say("önce acemi at görevini yapman gerek.")
+                end
+                when 50051.use with horse.get_grade()==1 begin
+					if pc.get_map_index() == 113 then
+								say_title("Bilgi:")
+									say("")
+									say_reward("O-X yarýþmasýnda bulunduðun sýrada")
+									say_reward("atýný çaðýramazsýn.")
+									say("")
+						else
+                        if pc.getsp()>=100 then
+                                if number(1, 100)<=horse_summon.get_horse_summon_prob_pct() then
+                                        say_title("Bilgi:")
+                                        say("")
+                                        say("Acemi at çaðrýldý.")
+                                        say("")
+                                        horse.summon()
+                                else
+                                        say_title("Bilgi:")
+                                        say("")
+                                        -----------"12345678901234567890123456789012345678901234567890"|
+                                        say_reward("Olmadý - Acemi at çaðýrma baþarýsýz. At Çaðýrma")
+                                        say_reward("yeteneðini geliþtirerek çaðýrma þansýný ")
+                                        say_reward("arttýrabilirsin.")
+                                end
+                                pc.change_sp(-100)
+                        else
+                                say_title("Bilgi:")
+                                say("")
+                                -----------"12345678901234567890123456789012345678901234567890"|
+                                say_reward("Zihinsel gücün az. Acemi atý çaðýrabilmen için")
+                                say_reward("en az 100 Mana Puanýna sahip olman gerekir.")
+                        end
+                end
+			end
+                when 50051.use with horse.get_grade()==2 begin
+                        say_title("Bilgi:")
+                        say("")
+                        -----------"12345678901234567890123456789012345678901234567890"|
+                        say_reward("Ýleri seviyedeki atý çaðýrmak için,")
+                        say_reward("Zýrhlý At Kitabý ")
+                        say_reward("lazým.")
+                        say("")
+                end
+                when 50051.use with horse.get_grade()==3 begin
+                        say_title("Bilgi:")
+                        say("")
+                        -----------"12345678901234567890123456789012345678901234567890"|
+                        say_reward("Uzman seviyedeki atlarý çaðýrmak için")
+                        say_reward("Asker At Kitabý ")
+                        say_reward("lazým.")
+                        say("")
+                end
+                when 50052.use with horse.get_grade()==0 begin
+                        say_title("Bilgi:")
+                        say("")
+                        -----------"12345678901234567890123456789012345678901234567890"|
+                        say_reward("Orta seviyedeki atý çaðýrman için")
+                        say_reward("acemi at görevini")
+                        say_reward("yapman lazým.")
+                        say("")
+                end
+                when 50052.use with horse.get_grade()==1 begin
+                        say_title("Bilgi:")
+                        say("")
+                        -----------"12345678901234567890123456789012345678901234567890"|
+                        say_reward("Acemi atý çaðýrman için,")
+                        say_reward("at resmi lazým.")
+                end
+                when 50052.use with horse.get_grade()==2 begin
+						if pc.get_map_index() == 113 then
+								say_title("Bilgi:")
+									say("")
+									say_reward("O-X yarýþmasýnda bulunduðun sýrada")
+									say_reward("atýný çaðýramazsýn.")
+									say("")
+						else
+                        if pc.getsp()>=200 then
+                                if number(1, 100)<=horse_summon.get_horse_summon_prob_pct() then
+                        say_title("Bilgi:")
+                        say("")
+                        -----------"12345678901234567890123456789012345678901234567890"|
+                        say_reward("Ýleri seviyedeki at çaðýrýldý.")
+                        say("")
+                        horse.summon()
+                        else
+                        say_title("Bilgi:")
+                        say("")
+                        -----------"12345678901234567890123456789012345678901234567890"|
+                       say_reward("Olmadý - Zýrhlý at çaðýrma baþarýsýz. At Çaðýrma")
+                       say_reward("yeteneðini geliþtirerek çaðýrma þansýný ")
+                       say_reward("arttýrabilirsin.")
+                                end
+                                pc.change_sp(-200)
+                        else
+                        say_title("Bilgi:")
+                        say("")
+                        -----------"12345678901234567890123456789012345678901234567890"|
+                        say_reward("Zihinsel gücün az. Zýrhlý atý çaðýrabilmen için")
+                        say_reward("en az 200 Mana Puanýna sahip olman gerekir.")
+                        say("")
+                        end
+                end
+			end
+                when 50052.use with horse.get_grade()==3 begin
+                        say_title("Bilgi:")
+                        say("")
+                        -----------"12345678901234567890123456789012345678901234567890"|
+                        say_reward("Asker atý çaðýrman için")
+                        say_reward("sana Asker At Kitabý ")
+                        say_reward("lazým.")
+                        say("")
+                end
+                when 50053.use with horse.get_grade()==0 begin
+                        say_title("Bilgi:")
+                        say("")
+                        -----------"12345678901234567890123456789012345678901234567890"|
+                        say_reward("Ýleri seviyedeki atý çaðýrman için,")
+                        say_reward("acemi at görevini")
+                        say_reward("yapman lazým.")
+                        say("")
+                end
+                when 50053.use with horse.get_grade()==1 begin
+                        say_title("Bilgi:")
+                        say("")
+                        -----------"12345678901234567890123456789012345678901234567890"|
+                        say_reward("Acemi atý çagirman için,")
+                        say_reward("At resmi lazim.")
+                        say("")
+                end
+                when 50053.use with horse.get_grade()==2 begin
+                        say_title("Bilgi:")
+                        say("")
+                        -----------"12345678901234567890123456789012345678901234567890"|
+                        say_reward("Orta seviyedeki atý çaðýrman için")
+                        say_reward("sana Zýrhlý At Kitabý ")
+                        say_reward("lazým.")
+                        say("")
+                end
+                when 50053.use with horse.get_grade()==3 begin
+						if pc.get_map_index() == 113 then
+								say_title("Bilgi:")
+									say("")
+									say_reward("O-X yarýþmasýnda bulunduðun sýrada")
+									say_reward("atýný çaðýramazsýn.")
+									say("")
+						else
+                        if pc.getsp()>=300 then
+                                if number(1, 100)<=horse_summon.get_horse_summon_prob_pct() then
+                        say_title("Bilgi:")
+                        say("")
+                        -----------"12345678901234567890123456789012345678901234567890"|
+                        say_reward("Uzman binici atý çaðýrýldý.")
+                        say("")
+                        horse.summon()
+                        else
+                        say_title("Bilgi:")
+                        say("")
+                        -----------"12345678901234567890123456789012345678901234567890"|
+                        say_reward("Olmadý - Asker at çaðýrma baþarýsýz. At Çaðýrma")
+                        say_reward("yeteneðini geliþtirerek çaðýrma þansýný ")
+                        say_reward("arttýrabilirsin.")
+                        end
+                        pc.change_sp(-300)
+                        else
+                        say_title("Bilgi:")
+                        say("")
+                        -----------"12345678901234567890123456789012345678901234567890"|
+                        say_reward("Zihinsel gücün az. Uzman atý çaðýrabilmen için")
+                        say_reward("en az 300 Mana Puanýna sahip olman gerekir.")
+                        say("")
+                        end
+                end
+        end
+	end
+        state __COMPLETE__ begin
+                when enter begin
+                        q.done()
+                end
+        end
+end

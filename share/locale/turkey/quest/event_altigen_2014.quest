@@ -1,0 +1,14 @@
+quest event_altigen_2014 begin
+	state start begin
+		when kill with game.get_event_flag("event_altigen_drop") == 1 and not npc.is_pc() begin
+			if npc.get_level() > pc.get_level() - 10 then
+				local s = number(1,250)
+				if s == 1 then
+				game.drop_item_with_ownership("50037",1)
+				return
+				end
+			end
+		end
+	end
+end
+

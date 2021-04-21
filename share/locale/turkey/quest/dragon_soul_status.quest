@@ -1,0 +1,20 @@
+quest dragon_soul_status begin
+	state start begin
+		when login or levelup with pc.get_level() >= 30 begin
+			send_letter(" Ejderha Taþý Parçasý ")
+		end
+		when info or button begin
+			say("Ejderha Taþý Parçasý düþürme þansýný açýlabilir[ENTER]veya kapatýlabilir. ")
+			say("Ejderha Taþý Parçasý düþürme þansý þuan: "..pc.getf("dragon_soul","drop_on").."")
+			if select("Aç "," Kapat ") == 1 then
+				pc.setf("dragon_soul","drop_on",1)
+				syschat("[Simyager] Ejderha Taþý Parçasý düþürme þansý açýldý. ")
+				send_letter(" Ejderha Taþý Parçasý ")
+			else
+				pc.setf("dragon_soul","drop_on",0)
+				syschat("[Simyager] Ejderha Taþý Parçasý düþürülme þansý kapatýldý.")
+				send_letter(" Ejderha Taþý Parçasý ")
+			end
+		end
+	end
+end

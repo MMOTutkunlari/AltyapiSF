@@ -1,0 +1,257 @@
+quest dark_matter begin
+	state start begin
+	end
+	
+	state run begin
+		when letter with pc.level >= 60 begin
+		set_state(info)
+		end
+	end
+	
+	state info begin
+		when letter begin
+		local v = find_npc_by_vnum(20011)
+			if v != 0 then
+			target.vid("__TARGET__", v, "Uriel")
+			end
+		send_letter("Karanlýk Madde II")
+		end
+		when button or info begin
+		say_title("Karanlýk Madde II")
+		say("")
+		say("Uriel'e göre Hayalet Orman eskiden Karanlýk")
+		say("Millet Hükümdarlýðýna mensuptu. Belki orada baþka")
+		say("ipuçlarý bulabilirsin. Ama bu orman tehlike dolu")
+		say("ve metin taþlarý tüm yaratýklarýn gözünü ")
+		say("döndürüyor. Baþka bilgiler almak için Kötü Aðacý ")
+		say("bul. Konuyla ilgili Uriel'le görüþ.")
+		say("")
+		end
+		
+		when __TARGET__.target.click or 20011.chat."Karanlýk Madde II" begin
+		target.delete("__TARGET__")
+		say_title("Uriel:")
+		say("")
+		say("Karanlýk Millet etrafý sýrlarla örülü. Senin")
+		say("sayende bazýlarýný çözdük, ama")
+		say("bazý bilgiler hala eksik. Lütfen eski bir")
+		say("belgenin peþine düþ. Hayalet Ormaný'da Sohan")
+		say("Daðý'nin yakýnlarýnda olmalý.")
+		set_state(kotuagac_kes)
+		end
+	end
+	
+	state kotuagac_kes begin
+		when letter begin
+		send_letter("Karanlýk Madde II")
+		end
+		
+		when kill begin
+		if npc.get_race() == 2305 and  pc.countitem("31002") < 1 then
+			local a = number(1,75)
+			if a == 7 then
+			pc.give_item2("31002",1)
+				if pc.countitem("31002") >= 1 then
+				say_reward("Kötü aðacý yenip belgeyi ele geçirdin. Yabancý ")
+				say_reward("bir dilde yazýlmýþ. Urielden çevirisini iste.")
+				setstate(urieledon)
+				end
+				end
+			end
+		end
+		
+		when button or info begin
+		say_title("Karanlýk Madde II")
+		say("")
+		say("Uriel'e göre Hayalet Orman eskiden Karanlýk")
+		say("Millet Hükümdarlýðýna mensuptu. Belki orada baþka")
+		say("ipuçlarý bulabilirsin. Ama bu orman tehlike dolu")
+		say("ve metin taþlarý tüm yaratýklarýn gözünü ")
+		say("döndürüyor. Baþka bilgiler almak için Kötü Aðacý ")
+		say("bul. Konuyla ilgili Uriel'le görüþ.")
+		say("")
+		end
+	end
+	
+	state urieledon begin
+		when letter with pc.get_level() >= 60 begin
+		local v = find_npc_by_vnum(20011)
+			if v != 0 then
+			target.vid("__TARGET1__", v, "Uriel")
+			end
+		end
+		
+		when button or info begin
+		say_title("Karanlýk Madde II")
+		say("")
+		say("Uriel'e göre Hayalet Orman eskiden Karanlýk")
+		say("Millet Hükümdarlýðýna mensuptu. Belki orada baþka")
+		say("ipuçlarý bulabilirsin. Ama bu orman tehlike dolu")
+		say("ve metin taþlarý tüm yaratýklarýn gözünü ")
+		say("döndürüyor. Baþka bilgiler almak için Kötü Aðacý ")
+		say("bul. Konuyla ilgili Uriel'le görüþ.")
+		say("")
+		end
+		
+		when __TARGET1__.target.click or 20011.chat."Karanlýk Madde II" begin
+		target.delete("__TARGET1__")
+		say_title("Uriel:")
+		say("")
+		say("Nihayet! Eski belgeyi buldun. Karanlýk aydýnlýða")
+		say("kavuþacak!")
+		say("")
+		wait()
+		say_title("Uriel:")
+		say("")
+		say("Ne ...?! Ýçinde hiçbir þey yazmýyor ki! Belge")
+		say("aslýnda on sayfadan oluþuyor. Lütfen Hayalet")
+		say("Ormaný'na geri dön ve geri kalan dokuz sayfayý ")
+		say("bul.")
+		say("")
+		pc.remove_item("31002",pc.countitem("31002"))
+		set_state(kotuagac_kes2)
+		return
+		end
+	end
+	
+	state kotuagac_kes2 begin
+		when letter with pc.get_level() >= 60 begin
+		send_letter("Karanlýk Madde II")
+		end
+		
+		when button or info begin
+		say_title("Karanlýk Madde II")
+		say("")
+		say("Uriel'e göre Hayalet Orman eskiden Karanlýk")
+		say("Millet Hükümdarlýðýna mensuptu. Belki orada baþka")
+		say("ipuçlarý bulabilirsin. Ama bu orman tehlike dolu")
+		say("ve metin taþlarý tüm yaratýklarýn gözünü ")
+		say("döndürüyor. Baþka bilgiler almak için Kötü Aðacý ")
+		say("bul. Konuyla ilgili Uriel'le görüþ.")
+		say("")
+		end
+		
+		when kill begin
+		if npc.get_race() == 2305 and pc.countitem("31002") < 9 then
+			local a = number(1,50)
+			if a == 5 then
+			pc.give_item2("31002",1)
+			notice(""..9-pc.countitem("31002").." sayfa daha bulmalýsýn.")
+				if pc.countitem("31002") >= 9 then
+				setstate(urieledon2)
+				end
+				end
+			end
+		end
+	end
+		
+	state urieledon2 begin
+		when __TARGET2__.target.click or 20011.chat."Karanlýk Madde II" begin
+		target.delete("__TARGET2__")
+		say_title("Uriel:")
+		say("")
+		say("Þimdi bir görelim bakalým. Görünüþe bakýlýrsa")
+		say("karanlýk millet ejderha kültünün Ulu Rahibesini")
+		say("bir lanetle kaçýrdý ve tarihi karabüyü sanatýný ")
+		say("yapmak için yedi kadýnýn kutsal gücünü kullandý.")
+		say("")
+		wait()
+		say_title("Uriel:")
+		say("")
+		say("Sung Mahi'yi büyülemek için kara büyü ayný anda")
+		say("yedi ayrý yerde yapýlmasý gerekir. Lee Seop ve")
+		say("ordusu zamanýnda ritüeli durdurmayý baþardý ve")
+		say("karanlýk milletin uðursuz planýný bozdu.")
+		say("")
+		wait()
+		say_title("Uriel:")
+		say("")
+		say("Bu millet gerçekten de korkunçtu. Ýnsan iradesini")
+		say("kara büyüyle kontrol edebiliyorlardý!")
+		say("")
+		wait()
+		say_title("Ödül")
+		say("")
+		say_reward("3300000 deneyim puaný kazandýn.")
+		say_reward("6 Adet beceri kitabý kazandýn. ")
+		pc.remove_item("31002",pc.countitem("31002"))
+		pc.give_item2("50300",6)
+		pc.give_exp2("3300000")
+		set_state(diary_pages)
+		end
+	end
+	
+	state diary_pages begin
+		when letter begin
+		local v = find_npc_by_vnum(20011)
+			if v != 0 then
+			target.vid("__TARGET3__", v, "Uriel")
+			end
+		send_letter("Ýpucu")
+		end
+		when button or info begin
+		say_title("Ýpucu")
+		say("")
+		say("Uriel eski yazýtlarda Gum Anýtý'yla ilgili")
+		say("ipuçlarý keþfetti. Daha ayrýntýlý bilgi için ona")
+		say("git.")
+		say("")
+		end
+		
+		when __TARGET__.target.click or 20011.chat."Ýpucu" begin
+		target.delete("__TARGET3__")
+		say_title("Uriel:")
+		say("")
+		say("Þimdiye kadar öðrendiðimiz þeyleri bir")
+		say("özetleyelim: Bir zamanlar karanlýk millet adýnda")
+		say("Sung Mahi'ye hizmet eden bir millet")
+		say("yaþarmýþ. Onu büyüleyebilmek için yedi Ejderha")
+		say("Rahibesi kaçýrmýþ ve yasaklý kara büyü için")
+		say("kutsal güçlerini kullandý. Ancak bunun ayný anda")
+		say("yedi ayrý yerde yapýlmasý gerekiyormuþ.")
+		say("")
+		wait()
+		say_title("Uriel:")
+		say("")
+		say("Ejderha Rahibeleri kara büyüyü bir kulede yaptý,")
+		say("yedi ayrý yerde deðil... Bunun için Sung")
+		say("Mahi'nin büyüsü baþarýsýz oldu!")
+		say("")
+		wait()
+		say_title(""..pc.get_name()..":")
+		say("")
+		say("Yedi Ejderha Rahibesine bu yanlýþ bilgiyi")
+		say("karanlýk millet vermiþ olmalý.")
+		say("")
+		wait()
+		say_title("Uriel:")
+		say("")
+		say("Belki onlarda daha iyisin bilmiyordu...")
+		say("Tesadüf olabilir belki ama eski yazýlar bu kuleyi")
+		say("Gum Anýtý baðlamýnda sözü ediliyor. Sanýrým Hwang")
+		say("Tapýnaðý'ndaki Þeytan Kulesi'nden bahsediliyor.")
+		say("")
+		wait()
+		say_title("Uriel:")
+		say("")
+		say("Sonunda yedi ejderha rahibesinin izini yakaladýk!")
+		say("Kýsaca dinlen ve sonra ne yapacaðýmýzý konuþalým.")
+		say("Çünkü korkarým Þeytan Kulesi'ne bir yolculuk")
+		say("yapman gerekecek...")
+		say("")
+		wait()
+		say_reward("Bu maceranýn sonraki bölümü seviye 66'ya")
+		say_reward("ulaþtýðýnda seni bekliyor olacak.")
+		say("")
+		clear_letter()
+		set_state(complete)
+		set_quest_state("diary_pages","run")
+		end
+	end
+	
+	state complete begin
+	end
+end
+
+	
+	

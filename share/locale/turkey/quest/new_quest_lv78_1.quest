@@ -1,0 +1,160 @@
+quest red_hell_quartz begin
+	state start begin
+	end
+	
+	state run begin
+		when letter with pc.level >= 78 begin
+		set_state(info)
+		end
+	end
+	
+	state info begin
+		when letter begin
+		local v = find_npc_by_vnum(20369)
+			if v != 0 then
+			target.vid("__TARGET__", v, "LeeChung")
+			end
+		send_letter("Kýrmýzý Cehennem Kuvarsý ")
+		end
+		
+		when button or info begin
+		say_title("Kýrmýzý Cehennem Kuvarsý ")
+		say("Gölge savaþçýlarý kumandaný Lee Chung, kýrmýzý ")
+		say("cehennem kuvarsý hakkýnda yeni bilgiler edindi.")
+		say("Bu taþý üretmek için üç çeþit maddeye ihtiyaç ")
+		say("duyulur: Doyyumhwan volkan topraðý, alev yelesi")
+		say("ve temel taþý.")
+		say("Bu maddeleri ele geçirmek için Ateþ Diyarý'nda")
+		say("Alev, Alev Savaþçýlarý ve Savaþ Kaplaný avla ve")
+		say("sonrasýnda bunlarý 20 adet kýrmýzý cehennem")
+		say("kuvarsýna dönüþtür.")
+		say("Savaþmaya baþlamadan önce Lee Chung'u bul.")
+		say("")
+		end
+		
+		when 20369 chat."Kýrmýzý Cehennem Kuvarsý " begin
+		target.delete("__TARGET__")
+		say_title("Lee Chung:")
+		say("Büyücülerimiz gökyüzünün gözyaþýný üretmek için")
+		say("gerekli olan kýrmýzý cehennem taþýnýn ateþinin")
+		say("gücünü içinde barýndýrdýðýný saptadý. Ateþ Diyarý ")
+		say("yaratýklarýnýn gücünün kaynaðý da bu kuvars")
+		say("olmalý.")
+		say("")
+		wait()
+		say_title("Lee Chung:")
+		say("Kýrmýzý cehennem taþý üç maddeyle üretilir:")
+		say("Volkan topraðý, alev yelesi ve temel taþý.")
+		say("Hepsini Ateþ Diyarý'nda bulabilirsin.")
+		say("")
+		set_state(find_matters)
+		end
+	end
+	
+	state find_matters begin
+		when 20369 chat."Kýrmýzý Cehennem Kuvarsý " begin
+			if pc.count_item("31006") >= 20 then
+			say_title("Lee Chung:")
+			say("Baþardýn! Nihayet 20 adet kýrmýzý cehennem")
+			say("kuvarsýna sahibiz. Cesaretin ve mücadele gücün")
+			say("beni her seferinde yeniden þaþýrtýyor.")
+			say("")
+			wait()
+			say_title("Ödül")
+			say_reward("36000000 deneyim puaný kazandýn.")
+			say_reward("Güneþ Özütü (B) kazandýn.")
+			say_reward("Kutsama Küresi kazandýn.")
+			say_reward("Çalýþkanlýk Madalyasý kazandýn.")
+			say("")
+			pc.remove_item("31006",pc.count_item("31006"))
+			pc.give_exp2("36000000")
+			pc.give_item2("72725",1)
+			pc.give_item2("70024",1)
+			pc.give_item2("70004",1)
+			local pet = number(1,4)
+				if pet == 1 then
+				pc.give_item2("53010",1)
+				elseif pet == 2 then
+				pc.give_item2("53011",1)
+				elseif pet == 3 then
+				pc.give_item2("53012",1)
+				elseif pet == 4 then
+				pc.give_item2("53013",1)
+				end
+			set_quest_state("the_last_matter","run")
+			set_state(complete)
+			return
+			elseif pc.count_item("31007") > 0 and pc.count_item("30019") > 0 and pc.count_item("90010") > 0 then
+				if pc.getqf("daily_count") >= 7 and pc.getqf("delay") > get_time() then
+				say_title("Lee Chung:")
+				say("Üzgünüm, ama bir günde sadece yedi kýrmýzý ")
+				say("cehennem kuvarsý üretebilirim. Bu iþlem sihir")
+				say("yeteneklerimi zorluyor. Sonuçta ben büyücü ")
+				say("deðilim.")
+				say("")
+				else
+					if pc.getqf("daily_count") >= 7 then
+					pc.delqf("daily_count")
+					end
+				say_title("Lee Chung:")
+				say("Hadi öyleyse! Bu üç maddeyi karýþtýrýp kýrmýzý ")
+				say("bir cehennem kuvarsý elde etmeye çalýþacaðým.")
+				say("")
+				wait()
+				local quartz = number(1,130)
+					if quartz > 40 then
+					say_title("Lee Chung:")
+					say("Harika! Oldu! Al iþte kýrmýzý cehennem kuvarsý!")
+					say("")
+					say_item_vnum(31006)
+					pc.give_item2("31006",1)
+					pc.remove_item("31007",1)
+					pc.remove_item("30019",1)
+					pc.remove_item("90010",1)
+					pc.setqf("daily_count",pc.getqf("daily_count") + 1)
+					pc.setqf("delay",get_time() + 24*60*60)
+					wait()
+					return
+					else
+					say_title("Lee Chung:")
+					say("Ayy! Sihir baþarýsýz oldu. Sanýrým büyü ")
+					say("yeteneklerimi gözümde büyüttüm. Ama bir dahaki")
+					say("denemede kesin baþaracaðým!")
+					say("")
+					pc.remove_item("30019",1)
+					pc.remove_item("90010",1)
+					pc.remove_item("31007",1)
+					pc.setqf("daily_count",pc.getqf("daily_count") + 1)
+					pc.setqf("delay",get_time() + 24*60*60)
+					wait()
+					return
+					end
+				end
+			else
+			say_title("Lee Chung:")
+			say("Bir madde eksik. Volkan toðraðý, alev yelesi ve")
+			say("temel taþýna ihtiyaç duyuyoruz.")
+			end
+		end
+		
+		when kill begin
+		if npc.get_race() == 2203 or npc.get_race() == 2204 or npc.get_race() == 2205 then
+		local chance = number(1,70)
+			if chance == 5 then
+			pc.give_item2("31007",1)
+			end
+			end
+		end
+		
+		when login with pc.getqf("delay") <= get_time() begin
+		pc.delqf("daily_count")
+		end
+	end
+	
+	state complete begin
+	end
+end
+		
+		
+		
+		

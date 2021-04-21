@@ -1,0 +1,200 @@
+quest dark_nation begin
+	state start begin
+		when login or levelup with pc.level >= 60 begin
+		set_state(info)
+		end
+	end
+	
+	state info begin
+		when letter with pc.get_level() >= 60 begin
+		local v = find_npc_by_vnum(20011)
+			if v != 0 then
+			target.vid("__TARGET__", v, "Uriel")
+			end
+			send_letter("Yeni bir iz")
+		end
+		
+		when button or info begin
+		say_title("Yeni bir iz")
+		say("")
+		say("Uriel eski günlük sayesinde hikayeyle ilgili")
+		say("baþka þeyler de öðrendi. Uriel'i bul ve")
+		say("ayrýntýlý bilgi al.")
+		say("")
+		end
+		
+		when __TARGET__.target.click or 20011.chat."Karanlýk Millet I" begin
+		target.delete("__TARGET__")
+		say_title("Uriel:")
+		say("")
+		say("Nasýlsýn? Günlüðü ve içinde 13. ve son sayfayla")
+		say("aniden biten hikayeyi hatýrlýyor musun?")
+		say("")
+		wait()
+		say_title(""..pc.get_name()..":")
+		say("")
+		say("Evet, tabi. Yedi kiþi Lee Seop ve süvari sýnýfýndan")
+		say("Hwang Tapýnaðý'na kaçtý ve ümitsizlik içinde")
+		say("yasaklý kara büyüyü yaptý ... Sonunda aralarýndan")
+		say("sadece biri hayatta kaldý.")
+		say("")
+		wait()
+		say_title("Uriel:")
+		say("")
+		say("Doðru. Araþtýrmalar yaptým ve bunlarýn kutsal kult")
+		say("Ejderha Rahibelerine üye yedi kiþinin olduðunu")
+		say("öðrendim. Eski yazýlarda bunlardan Karanlýk Millet")
+		say("adýnda teokratik bir halkla ilgisi olduðu yazýyor.")
+		say("Bu yedi Ejderha Rahibesi de bu gizemli millete mi")
+		say("mensuptu acaba? Al, bu parþömeni iyice oku ve sonra")
+		say("tekrar yanýma gel.")
+		say("")
+		clear_letter()
+		wait()
+		set_state(dark_nation)
+		return
+		end
+	end
+	
+	state dark_nation begin
+		when letter with pc.get_level() >= 60 begin
+		send_letter("Karanlýk Millet I")
+		local v1 = find_npc_by_vnum(20011)
+			if v1 != 0 then
+			target.vid("__TARGET1__", v1, "Uriel")
+			end
+		end
+		
+		when button or info begin
+		say_title("Karanlýk Millet I")
+		say("")
+		say("Uriel'in araþtýrmalarýna göre yedi Ejderha Rahibesi")
+		say("karanlýk millete mensuptu. Sohan Daðý'ndaki eski")
+		say("mezar taþýný incele. Karanlýk milletin baþkenti de")
+		say("buradaymýþ. Öncesinde tekrar Uriel'le konuþ.")
+		say("")
+		end
+		
+			when __TARGET1__.target.click or 20011.chat."Karanlýk Millet I" begin
+		target.delete("__TARGET1__")
+		say_title("Uriel:")
+		say("")
+		say("Hem inanýlmaz derecede ileri büyü sanatlarý hem de")
+		say("Lee Seop'un günlüðüne göre yok edilmiþ olduklarý ")
+		say("gerçeði Ejderha Rahibelerinin gerçekten de karanlýk")
+		say("millete mensup olduklarýný gösteriyor. Eski ")
+		say("karanlýk yazýlarda bir harita ver. Dikkatlice ")
+		say("incelendiðinde milletin baþkentinin gerçekten de ")
+		say("Sohan Daðý'nda olduðu tespit edilebiliyor.")
+		say("")
+		wait()
+		say_title(""..pc.get_name()..":")
+		say("")
+		say("Sohan Daðý mý? Orada gerçekten eski bir mezar taþý ")
+		say("görmüþtüm!")
+		say("")
+		wait()
+		say_title("Uriel:")
+		say("Üzerindeki yazýyý da hatýrlýyor musun?")
+		say("Hatýrlamýyorsun herhalde. Bu mezar taþý bize ")
+		say("karanlýk millet hakkýnda önemli bilgiler verebilir.")
+		say("Sohan Daðý'na gidip benim için yazýtýn bir ")
+		say("kopyasýný oluþturabilir misin?")
+		say("")
+		set_state("sohan_dagi")
+		return
+		end
+	end
+	
+	state sohan_dagi begin
+		when letter with pc.get_level() >= 60 begin
+		send_letter("Karanlýk Millet I")
+		local v = find_npc_by_vnum(20371)
+			if v != 0 and pc.get_map_index() != 80 then
+			target.vid("__TARGET2__", v, "Eski Mezar Taþý ")
+			end
+		end
+		
+		when button or info begin
+		say_title("Karanlýk Millet I")
+		say("")
+		say("Uriel'in araþtýrmalarýna göre yedi Ejderha")
+		say("Rahibesi karanlýk millete mensuptu. Sohan")
+		say("Daðý'ndaki eski mezar taþýný incele. Burada çok")
+		say("eskiden karanlýk milletin baþkenti")
+		say("bulunmaktaymýþ...")
+		say("")
+		end
+		
+		when __TARGET2__.target.click or 20371.chat."Karanlýk Millet I" with pc.get_map_index() == 61 begin
+		target.delete("__TARGET2__")
+		say_reward("Karanlýk millet zamanýndan kalma eski mezar")
+		say_reward("taþýný buldun ve bir kopyasýný oluþturdun. Bunu")
+		say_reward("Uriel'e götür.")
+		say("")
+		pc.give_item2("31001",1)
+		set_state(uriele_git)
+		end
+	end
+	
+	state uriele_git begin
+		when letter begin
+		local v2 = find_npc_by_vnum(20011)
+			if v2 != 0 then
+			target.vid("__TARGET3__", v2, "Uriel")
+			end
+		end
+		
+		when button or info begin
+		say_title("Karanlýk Millet I")
+		say("")
+		say("Uriel'in araþtýrmalarýna göre yedi Ejderha")
+		say("Rahibesi karanlýk millete mensuptu. Sohan")
+		say("Daðý'ndaki eski mezar taþýný incele. Burada çok")
+		say("eskiden karanlýk milletin baþkenti")
+		say("bulunmaktaymýþ...")
+		say("")
+		end
+		
+		when __TARGET3__.target.click or 20011.chat."Karanlýk Millet I" begin
+		target.delete("__TARGET3__")
+		say_title("Uriel:")
+		say("")
+		say("Nihayet! Býrak yazýtý inceleyeyim... Þunu söylüyor:")
+		say("Karanlýk millet kendini kara büyüye adamýþtý ve")
+		say("Þeytan Tanrýsý Sung Mahi'ye hizmet ediyordu.")
+		say("")
+		wait()
+		say_title("Uriel:")
+		say("")
+		say("Tanrý aþkýna... Sung Mahi! Sonra yedi Ejderha")
+		say("Rahibesi yasaklý büyüyle Sung Mahi'yi büyülemeye")
+		say("mi çalýþtý?")
+		say("")
+		wait()
+		say_title("Uriel:")
+		say("")
+		say("Ýyi iþ çýkardýn. Bunun için tabii ki ödül de")
+		say("alacaksýn.")
+		say("")
+		wait()
+		say_title("Ödül")
+		say("")
+		say_reward("980000 deneyim puaný kazandýn.")
+		say_reward("1750000 Yang kazandýn.")
+		say_reward("5 Adet beceri kitabý kazandýn.")
+		say_reward("Diðer görevler seni bekliyor..")
+		say("")
+		pc.changegold("1750000")
+		pc.give_item2("50300",5)
+		pc.give_exp2("980000")
+		pc.remove_item("31001",pc.countitem("31001"))
+		clear_letter()
+		set_quest_state("dark_matter", "run")
+		set_state(complete)
+		end
+	end
+	
+	state complete begin
+	end
+end

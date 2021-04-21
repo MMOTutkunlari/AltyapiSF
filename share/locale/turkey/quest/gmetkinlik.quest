@@ -1,0 +1,220 @@
+quest gmetkinlik begin
+	state start begin
+		when letter with pc.is_gm() begin
+			send_letter("GM: Etkinlik")
+			end
+		when info or button with pc.is_gm() begin
+					local event = select("Ramazan ay'ý etkinliði","Yaðmacýlarý Avla etkinliði ","Sertifika etkinliði ","Hallowen etkinliði ","Olimpiyat etkinliði","Noel etkinliði","Sevgililer Günü etkinliði","Dünya Kupasý etkinliði","Ayýþýðý Define Sandýðý etkinliði","Altýgen Hediye Paketi etkinliði","Kostüm etkinliði","Çöl Fýrtýnasý Sandýðý etkinliði","Sonsuz Kýþ Sandýðý etkinliði","Kapat")
+					if event == 1 then
+					local event2 = select("Ramazan etkinliði baþlat","Ramazan etkinliði bitir","Vazgeç ")
+					if event2 == 1 then
+					notice_all("Etkinlik: 'Ramazan Ayý' etkinliði baþladý!")
+					notice_all("Etkinlik: 'Tarihçi' ve 'Niyetli Vatandaþ' ile görüþ. ")
+					game.set_event_flag("ramadan_drop",1)
+					game.set_event_flag("ramadan_reward",1)
+					send_letter("GM: Etkinlik")
+					elseif event2 == 2 then
+					notice_all("Etkinlik: 'Ramazan Ayý' etkinliði sona erdi.")
+					notice_all("Etkinlik: 'Tarihçi' ve 'Niyetli Vatandaþ' köylerine geri döndü.")
+					game.set_event_flag("ramadan_reward",0)
+					game.set_event_flag("ramadan_drop",0)
+					send_letter("GM: Etkinlik")
+					elseif event2 == 3 then
+					return
+					send_letter("GM: Etkinlik")
+					end
+					elseif event == 2 then
+					local event3 = select("Yaðmacýlarý Avla etkinliði baþlat ","Yaðmacýlarý Avla etkinliði bitir","Vazgeç ")
+					if event3 == 1 then
+					notice_all("Etkinlik: 'Yaðmacýlarý Avla' etkinliði baþladý. ")
+					notice_all("Etkinlik: Handu Up ve Wonda Rim ile görüþ. ")
+					game.set_event_flag("harvest_festival",1)
+					send_letter("GM: Etkinlik")
+					elseif event3 == 2 then
+					notice_all("Etkinlik: 'Yaðmacýlarý Avla' etkinliði sona erdi.")
+					notice_all("Etkinlik: 'Handu-Up' ve 'Wonda-Rim' köylerine geri döndü.")
+					game.set_event_flag("harvest_festival",0)
+					send_letter("GM: Etkinlik")
+					elseif event3 == 3 then
+					return
+					send_letter("GM: Etkinlik")
+					end
+					elseif event == 3 then
+					local event4 = select("Sertifika etkinliði baþlat ","Sertifika etkinliði kapat","Vazgeç ")
+					if event4 == 1 then
+					notice_all("Etkinlik: 'Sertifika' etkinliði baþladý. ")
+					notice_all("Etkinlik: Metin Taþlarýndan ''Sertifika'' elde edebilirsin. ")
+					game.set_event_flag("sertifika_drop",1)
+					send_letter("GM: Etkinlik")
+					elseif event4 == 2 then
+					notice_all("Etkinlik: 'Sertifika' etkinliði sona erdi.")
+					game.set_event_flag("sertifika_drop",0)	
+					send_letter("GM: Etkinlik")
+					elseif event4 == 3 then
+					return
+					send_letter("GM: Etkinlik")
+					end
+					elseif event == 4 then
+					local event5 = select("Hallowen etkinliði baþlat ","Hallowen etkinliði bitir ","Vazgeç ")
+					if event5 == 1 then
+					notice_all("Etkinlik: 'Hallowen' etkinliði baþladý. ")
+					notice_all("Etkinlik: 'Jack Pumpkin' ile görüþ. ")
+					game.set_event_flag("halloween_hair",1)
+					send_letter("GM: Etkinlik")
+					elseif event5 == 2 then	
+					notice_all("Etkinlik: 'Hallowen' etkinliði sona erdi. ")
+					notice_all("Etkinlik: 'Jack Pumpkin' köyüne geri döndü. ")
+					game.set_event_flag("halloween_hair",0)
+					send_letter("GM: Etkinlik")
+					elseif event5 == 3 then			
+					return
+					send_letter("GM: Etkinlik")
+					end
+					elseif event == 5 then
+					local event6 = select("Olimpiyat etkinliði baþlat ","Olimpiyat etkinliði bitir ","Vazgeç ")
+					if event6 == 1 then
+					notice_all("Etkinlik: 'Olimpiyat' etkinliði baþladý. ")
+					notice_all("Etkinlik: 'Yu-Hwan' ile görüþ. ")
+					game.set_event_flag("medal_part_drop",1)
+					send_letter("GM: Etkinlik")
+					elseif event6 == 2 then 
+					notice_all("Etkinlik: 'Olimpiyat' etkinliði sona erdi. ")
+					game.set_event_flag("medal_part_drop",0)
+					send_letter("GM: Etkinlik")
+					elseif event6 == 3 then	
+					return
+					send_letter("GM: Etkinlik")
+					end
+					elseif event == 6 then
+					local event7 = select("Noel etkinliði baþlat ","Noel etkinliði bitir ","Vazgeç ")
+					if event7 == 1 then
+					notice_all("Etkinlik: 'Noel' etkinliði baþladý. ")
+					notice_all("Etkinlik: 'Noel Baba' ile görüþ. ")
+					game.set_event_flag("new_xmas_event",1)
+					send_letter("GM: Etkinlik")
+					elseif event7 == 2 then 
+					notice_all("Etkinlik: 'Noel' etkinliði sona erdi. ")
+					notice_all("Etkinlik: 'Noel Baba' köyüne geri döndü. ")
+					game.set_event_flag("new_xmas_event",0)
+					send_letter("GM: Etkinlik")
+					elseif event7 == 3 then	
+					return
+					send_letter("GM: Etkinlik")
+					end
+					elseif event == 7 then
+					local event8 = select("Sevgililer günü etkinliði baþlat ","Sevgililer günü etkinliði bitir ","Vazgeç ")
+					if event8 == 1 then
+					notice_all("Etkinlik: ''Sevgililer günü'' etkinliði baþladý. ")
+					notice_all("Etkinlik: Tüm canavarlardan Gül, Çikolata ve Amor Sandýðý elde edebilirsin. ")
+					game.set_event_flag("valentin_drop",1)
+					send_letter("GM: Etkinlik")
+					elseif event8 == 2 then 
+					notice_all("Etkinlik: ''Sevgililer günü'' etkinliði sona erdi. ")
+					game.set_event_flag("valentin_drop",0)
+					send_letter("GM: Etkinlik")
+					elseif event8 == 3 then	
+					return					
+					send_letter("GM: Etkinlik")
+					end
+					elseif event == 8 then					
+			
+					local event9 = select("Dünya kupasý etkinliði baþlat ","Dünya kupasý etkinliði bitir ","Vazgeç ")
+					if event9 == 1 then
+					notice_all("Etkinlik: ''Dünya kupasý'' etkinliði baþladý. ")
+					notice_all("Etkinlik: Tüm canavarlardan Futbol Topu elde edebilirsin. ")
+					notice_all("Etkinlik: Altýn Futbol Topu ödülü için ''Yu-Hwan'' ile görüþ.  ")
+					game.set_event_flag("new_football_2014_event",1)
+					game.set_event_flag("football_drop",1)
+					send_letter("GM: Etkinlik")
+					elseif event9 == 2 then 
+					notice_all("Etkinlik: ''Dünya kupasý'' etkinliði sona erdi. ")
+					game.set_event_flag("new_football_2014_event",0)
+					game.set_event_flag("football_drop",0)
+					send_letter("GM: Etkinlik")
+					elseif event9 == 3 then	
+					return					
+					send_letter("GM: Etkinlik")
+					end
+					elseif event == 9 then
+
+					local event10 = select("Ayýþýðý Define Sandýðý etkinliði baþlat ","Ayýþýðý Define Sandýðý etkinliði bitir ","Vazgeç ")
+					if event10 == 1 then
+					notice_all("Etkinlik: ''Ayýþýðý Define Sandýðý'' etkinliði baþladý. ")
+					notice_all("Etkinlik: Tüm canavarlardan Ayýþýðý Define Sandýðý elde edebilirsin. ")
+					game.set_event_flag("event_ayisigi_drop",1)
+					send_letter("GM: Etkinlik")
+					elseif event10 == 2 then 
+					notice_all("Etkinlik: ''Ayýþýðý Define Sandýðý'' etkinliði sona erdi. ")
+					game.set_event_flag("event_ayisigi_drop",0)
+					send_letter("GM: Etkinlik")
+					elseif event10 == 3 then	
+					return					
+					send_letter("GM: Etkinlik")
+					end
+					elseif event == 10 then					
+					local event11 = select("Altýgen Hediye Paketi etkinliði baþlat ","Altýgen Hediye Paketi etkinliði bitir ","Vazgeç ")
+					if event11 == 1 then
+					notice_all("Etkinlik: ''Altýgen Hediye Paketi'' etkinliði baþladý. ")
+					notice_all("Etkinlik: Tüm canavarlardan Altýgen Hediye Paketi elde edebilirsin. ")
+					game.set_event_flag("event_altigen_drop",1)
+					send_letter("GM: Etkinlik")
+					elseif event11 == 2 then 
+					notice_all("Etkinlik: ''Altýgen Hediye Paketi'' etkinliði sona erdi. ")
+					game.set_event_flag("event_altigen_drop",0)
+					send_letter("GM: Etkinlik")
+					elseif event11 == 3 then	
+					return					
+					send_letter("GM: Etkinlik")
+					end
+					elseif event == 11 then
+					local event12 = select("Kostüm etkinliði baþlat ","Kostüm etkinliði bitir ","Vazgeç ")
+					if event12 == 1 then
+					notice_all("Etkinlik: ''Kostüm'' etkinliði baþladý. ")
+					notice_all("Etkinlik: 30. seviye ve üzeri Metin Taþlarýndan ''Kostüm'' elde edebilirsin. ")
+					game.set_event_flag("costume_drop",1)
+					send_letter("GM: Etkinlik")
+					elseif event12 == 2 then 
+					notice_all("Etkinlik: ''Kostüm'' etkinliði sona erdi. ")
+					game.set_event_flag("costume_drop",0)
+					send_letter("GM: Etkinlik")
+					elseif event12 == 3 then	
+					return					
+					send_letter("GM: Etkinlik")
+					end
+					elseif event == 12 then
+					local event13 = select("Çöl Fýrtýnasý Sandýðý etkinliði baþlat ","Çöl Fýrtýnasý Sandýðý etkinliði bitir ","Vazgeç ")
+					if event13 == 1 then
+					notice_all("Etkinlik: ''Çöl Fýrtýnasý Sandýðý'' etkinliði baþladý. ")
+					notice_all("Etkinlik: Metin Taþlarýndan ve Patronlardan ''Çöl Fýrtýnasý Sandýðý'' elde edebilirsin. ")
+					game.set_event_flag("col_firtinasi_drop",1)
+					send_letter("GM: Etkinlik")
+					elseif event13 == 2 then 
+					notice_all("Etkinlik: ''Çöl Fýrtýnasý Sandýðý'' etkinliði sona erdi. ")
+					game.set_event_flag("col_firtinasi_drop",0)
+					send_letter("GM: Etkinlik")
+					elseif event13 == 3 then	
+					return					
+					send_letter("GM: Etkinlik")
+					end
+					elseif event == 13 then
+					local event14 = select("Sonsuz Kýþ Sandýðý etkinliði baþlat ","Sonsuz Kýþ Sandýðý etkinliði bitir ","Vazgeç ")
+					if event14 == 1 then
+					notice_all("Etkinlik: ''Sonsuz Kýþ Sandýðý'' etkinliði baþladý. ")
+					notice_all("Etkinlik: Metin Taþlarýndan ve Patronlardan ''Sonsuz Kýþ Sandýðý'' elde edebilirsin. ")
+					game.set_event_flag("sonsuz_kis_drop",1)
+					send_letter("GM: Etkinlik")
+					elseif event14 == 2 then 
+					notice_all("Etkinlik: ''Sonsuz Kýþ Sandýðý'' etkinliði sona erdi. ")
+					game.set_event_flag("sonsuz_kis_drop",0)
+					send_letter("GM: Etkinlik")
+					elseif event14 == 3 then	
+					return					
+					send_letter("GM: Etkinlik")
+					end
+					elseif event == 14 then
+					send_letter("GM: Etkinlik")
+					return
+					end
+				end
+			end
+		end

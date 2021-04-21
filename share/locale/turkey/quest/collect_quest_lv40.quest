@@ -1,0 +1,311 @@
+----------------------------------------------------
+--COLLECT QUEST_lv40
+--METIN2 Collecting Quest
+----------------------------------------------------
+quest collect_quest_lv40  begin
+        state start begin
+        end
+        state run begin
+                when login or levelup with pc.level >= 40 and not pc.is_gm() begin
+                        set_state(information)
+                end
+        end
+        state information begin
+                when letter begin
+                        local v = find_npc_by_vnum(20084)
+                        if v != 0 then
+                                target.vid("__TARGET__", v, "Biologist Chaegirab")
+                        end
+                        send_letter("Chaegirab'ýn Ricasý ")
+                end
+                when button or info begin
+                        say_title("Chaegirab'ýn Ricasý ")
+                        say("")
+                        say("Uriel'in öðrencisi Biyolog Chaegirab")
+                        say("seni arýyor.")
+                        say("Onun yanýna git ve yardým et.")
+                        say("")
+                end
+                when __TARGET__.target.click or
+                        20084.chat."Lanet Kitabý " begin
+                        target.delete("__TARGET__")
+                        say_title("Biyolog Chaegirab:")
+                        say("")
+                        ---                                                   l
+                        say("Oh Merhaba! Yalnýz canavarlar üzerine,")
+                        say("bilgi toplamýyorum, deðiþik ")
+                        say("büyülerlede ilgileniyorum.")
+                        say("Ama bunu yalnýz yapamam..")
+                        say("Aslýnda bunu kendi baþýma yapmam lazým")
+                        say("ama ne yazýk ki mümkün deðil.")
+                        say("Sen benim için bunu yapabilir misin? ")
+                        say("Çok iyi ödüllendirileceksin!")
+                        say("")
+                        say("")
+                        wait()
+                        say_title("Biyolog Chaegirab:")
+                        say("")
+                        ---                                                   l
+                        say("Ejderha vadisinin gizli bilgilerini ")
+                        say("öðrenmek istiyorum..")
+                        say("Bence onlar eski zamanýn büyülerini ")
+                        say("iyi biliyorlar, onlarda lanet")
+                        say("kitabý da var. Bu kitaplar bana")
+                        say("eksik olan anahtar.")
+                        say("Onlarý incelemem için")
+                        say("her seferinde bir tane getir.")
+						say("")
+						say("")
+                        wait()
+                        say_title("Biyolog Chaegirab:")
+                        say("")
+                        say("Bana eski veya yýrtýk kitap getirme.")
+                        say("Onlar deðersiz.")
+                        say("Ýnceleme için 15 kitap lazým.")
+                        say("")
+                        say("Ama hep bir tane. Bol Þanslar!")
+                        say("")
+                        set_state(go_to_disciple)
+                        pc.setqf("duration",0) 
+                        pc.setqf("collect_count",0)                        pc.setqf("drink_drug",0) 
+                end
+        end
+        state go_to_disciple begin
+                when letter begin
+                        send_letter("Biyoloðun Araþtýrmasý ")
+                end
+                when button or info begin
+                        say_title("Ejderha Vadisinden Lanet Kitabý ")
+                        ---                                                   l
+                        say("")
+                        say("Uriel'in öðrencisi Chaegirab Ejderha Vadisinin")
+                        say("büyülerini araþtýrýyor.")
+                        say("Orada Lanet Kitaplarý da var.")
+                        say("Chaegirab'a 15 Lanet kitabý getir.")
+                        say("Ama tek tek.")
+                        say("")
+                        say_item_vnum(30047)
+                        say_reward("Þu anda ".." "..pc.getqf("collect_count").." Lanet Kitabý topladýn.")
+                        say("")
+                end
+				when 71035.use begin 
+				if get_time() < pc.getqf("duration") then
+				say("")
+				say("Henüz sihirli suyu kullanamazsýn.")
+				say("")
+				return
+				end
+                        if pc.getqf("drink_drug")==1 then
+                                say("")
+                                say("Yoksa kullandýn mý!")
+                                say("")
+                                return
+                        end
+                        if pc.count_item(30047)==0 then
+                                say_title("Biyolog Chaegirab:")
+                                say("")
+                                say("Lanet Kitaplarýný getirdiðin")
+                                say("müddetçe sihirli suyu kulanabilirsin.")
+                                say("")
+                                return
+                        end
+                        item.remove()
+                        pc.setqf("drink_drug",1)
+                end
+
+		when 20084.chat."GM: collect_quest_lv40.skip_delay" with pc.count_item(30047) >0 and pc.is_gm() and get_time() <= pc.getqf("duration") begin
+			say(mob_name(20084))
+			say("You are GM, OK")
+			pc.setqf("duration", get_time()-1)
+			return
+		end
+            when 20084.chat."Birleþmiþ lanetlerin kitaplarý " with pc.count_item(30047) >0   begin
+                        if get_time() > pc.getqf("duration") then
+							if  pc.count_item(30047) >0 then
+                                say_title("Biyolog Chaegirab:")
+                                say("")
+                                ---                                                   l
+                                say("Oh!! Bana kitap getirdin...")
+                                say("Incelemem lazým...")
+                                say("Bir dakika...")
+                                say("")
+                                pc.remove_item(30047, 1)
+								if  is_test_server()  then 
+									pc.setqf("duration",get_time()+2) 
+								else
+									pc.setqf("duration",get_time()+1) -----------------------------------22½Ã°£
+				end
+				wait()
+				
+                                local pass_percent
+                                if pc.getqf("drink_drug")==0 then
+                                        pass_percent=60
+                                else
+                                        pass_percent=90
+                                end
+                                local s= number(1,100)
+                                if s<= pass_percent  then
+								if pc.getqf("collect_count")< 14 then         
+								 	local index =pc.getqf("collect_count")+1
+									pc.setqf("collect_count",index)     
+                                                     say_title("Chaegirab:")
+						say("")
+                                                	say("Ohh!! Harika! Teþekkür ederim...")
+									say("".." "..15-pc.getqf("collect_count").. " tane kaldý!")
+									say("Bol þanslar!")
+                                                say("")
+                                                pc.setqf("drink_drug",0)         
+                                                return
+                                        end
+                                        say_title("Biyolog Chaegirab:")
+                                        say("")
+                                        say("15 Kitap topladýn!!")
+                                        say("Yalnýz bir de tapýnak ruh taþý lazým,")
+                                        say("onu anahtar olarak kullanacaðýz.")
+                                        say("Tapýnaðýn ruh taþýný, tapýnaktaki canavarlarýn")
+                                        say("yanýnda bulacaksýn.")
+                                        say("Bana bir tane getirecek misin?")
+                                        say("")
+
+                                        say("")
+                                        pc.setqf("collect_count",0)
+                                        pc.setqf("drink_drug",0)
+                                        pc.setqf("duration",0)
+                                        set_state(key_item)
+                                        return
+                                else
+                                say_title("Biyolog Chaegirab:")
+                                say("")
+                                say("Hmm.... Bu yýrtýlmýþ...")
+                                say("Kusura bakma. Bunu kullanamam.")
+                                say("En önemli parça yýrtýk!")
+                                say("Lütfen, yenisini getirir misin?")
+                                say("")
+                                pc.setqf("drink_drug",0)         
+                                return
+                        end
+				else
+                    say_title("Biyolog Chaegirab:")
+					say(""..item_name(30047).." 'na sahip deðilsin!")
+					return
+				end
+                else
+                  say_title("Biyolog Chaegirab:")
+                  say("")
+		  ---                                                   l
+                  say("Kusura bakma....")
+                  say("Getirdiðin ")
+                  say("Kitabý henüz incelemedim..")
+                  say("Özür dilerim.... Bana yenisini")
+                  say("daha sonra getirebilir misin?")
+                  say("")
+                  return
+                end
+        end
+end
+        state key_item begin
+                when letter begin
+                        send_letter("Biyoloðun  Araþtýrmasý ")
+                        if pc.count_item(30221)>0 then
+                                local v = find_npc_by_vnum(20084)
+                                if v != 0 then
+                                        target.vid("__TARGET__", v, "Chaegirap")
+                                end
+                        end
+                end
+                when button or info begin
+                        if pc.count_item(30221) >0 then
+                                say_title("Tapýnaðýn Ruh Taþý ")
+                                say("")
+                                ---                                                   l
+                                say("Nihayet! Ruh taþýný ")
+                                say("buldun, onu Chaegirab'a götür.")
+                                say("")
+                                return
+                        end
+                        say_title("Tapýnaðýn Ruh taþý ")
+                        say("")
+                        ---                                                   l
+                        say("Uriel'in öðrencisi Chaegirab")
+                        say("için 15 lanet kitabý ")
+                        say("buldun, son olarak")
+                        say("gizli mezhebin tapýnaðýndan ruh taþý lazým.")
+						say("")
+						say_item_vnum(30221)
+                        say("Onu bul ve Chaegirab'a götür.")
+						say("Ruh taþýný "..mob_name(734).." , ")
+						say(""..mob_name(735).." , "..mob_name(736).."")
+						say("ve "..mob_name(737).." den alabilirsin.")
+						say("")
+                end
+                when kill begin
+				if npc.get_race() == 731 or npc.get_race() == 732 or npc.get_race() == 733 or npc.get_race() == 734 or npc.get_race() == 735 or npc.get_race() == 736 or npc.get_race() == 737 then
+                        local s = number(1,300)
+                        if s==1 then
+                                pc.give_item2(30221,1)
+                                send_letter("Gizli mezhebin tapýnaðýnýn ruh taþý'ný buldun.")
+                        end
+                end
+				end
+                when __TARGET__.target.click  or
+                        20084.chat."Tapýnað'ýn Ruh Taþýný buldun" with pc.count_item(30221) > 0  begin
+                        target.delete("__TARGET__")
+						if pc.count_item(30221) > 0 then 
+						say_title("Biyolog Chaegirab:")
+						say("")
+                        say("Ohh!!! Teþekkür ederim..")
+                        say("Ödül olarak gücünü yükseltiyorum ..")
+						---                                                   l
+                        say("Bu bir gizli reçete, içinde ")
+                        say("güç artýrýmý var...")
+                        say("Onu Baek-Go'ya götür. Sana bir içki yapacak.")
+                        say("Iyi eðlenceler!")
+                        say("Senin sayende þimdi eski büyüleri tanýyorum .")
+                        say("")
+                        pc.remove_item(30221,1)
+                        set_state(__reward)
+			else
+						say_title("Biyolog Chaegirab:")
+				say(""..item_name(30221).." 'na sahip deðilsin!")
+				say("")
+				return
+			end
+                end
+        end
+        state __reward begin
+                when letter begin
+                        send_letter("Chaegirab'ýn ödülü ")
+                        local v = find_npc_by_vnum(20018)
+                        if v != 0 then
+                                target.vid("__TARGET__", v, "Baek-Go")
+                        end
+                end
+                when button or info begin
+                        say_title("Chaegirab'ýn ödülü ")
+                        ---                                                   l
+                        say("Lanet Kitaplarý ve Ruh Taþýnýn ödülü olarak")
+                        say("Biyolog Chaegirab sana gizli bir reçete verdi.")
+                        say("Baek-Go'ya götür git, sana mucizevi bir iksir yapacak.")
+                end
+                when __TARGET__.target.click  or
+                        20018.chat."Gizli reçete"  begin
+                    target.delete("__TARGET__")
+                        say_title("Baek-Go:")
+                        say("Ah bu Biyolog Chaegirab'ýn reçetesi mi?")
+                        say("Hm, bu saldýrý hýzýný 5 puan artýracak. Ýþte")
+                        say("iksirin! Ayný zamanda sana bu sandýðý da")
+                        say("vermeliyim. Ona iyi bak.")                                             
+                        say_reward("Chaegirab'ýn isteðini yerine getirmen")
+                        say_reward("karþýlýðýnda, saldýrý hýzýn kalýcý olarak 5 puan")
+                        say_reward("arttý.")
+			affect.add_collect(apply.ATT_SPEED,5,60*60*24*365*60) --60³â		
+                        pc.give_item2("50110",1)
+						pc.delqf("collect_count")
+                        clear_letter()
+                        set_quest_state("collect_quest_lv50", "run")
+                        set_state(__complete)
+                end
+        end
+        state __complete begin
+        end
+end

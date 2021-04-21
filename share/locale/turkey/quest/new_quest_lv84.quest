@@ -1,0 +1,88 @@
+quest the_war_begins begin
+	state start begin
+	end
+	
+	state run begin
+		when letter with pc.level >= 84 begin
+		set_state(info)
+		end
+	end
+	
+	state info begin
+		when letter begin
+		local v = find_npc_by_vnum(20369)
+			if v != 0 then
+			target.vid("__TARGET__", v, "LeeChung")
+			end
+		send_letter("Savaþ baþlýyor")
+		end
+		
+		when button or info begin
+		say_title("Savaþ baþlýyor")
+		say("Lee Chung gökyüzünün gözyaþýný aldý ve Þeytan")
+		say("Katakombunda kullanman için hazýr hale getirdi.")
+		say("Ayrýntýlar için yanýna git.")
+		end
+		
+		when 20369 chat."Savaþ baþlýyor" begin
+		target.delete("__TARGET__")
+		say_title("Lee Chung:")
+		say("Gökyüzünün gözyaþý þimdi elimizde olduðuna göre")
+		say("Karanlýðýn Köleleri'ni alt etmemiz ve Agwileri")
+		say("bu dünyadan kovmamýz da an meselesi!")
+		say("ancak gücü sadece Þeytan Katakombu'nun belirli")
+		say("bir yerinde kullanýldýðýnda geliþir.")
+		wait()
+		say_title("Lee Chung:")
+		say("Þeytan Katakombu'nun beþ katý olduðunu")
+		say("biliyoruz. Beþinci ve tanýdýðýmýz son katta")
+		say("acýmasýz Agwi Generali Tartarusla")
+		say("karþýlaþacaksýn. Tartarus, rütbece Kral Azrail ve")
+		say("Prens Kharoon'unun ardýnda, üçüncü konumda")
+		say("bulunur. Onu gökyüzünün gözyaþý yardýmýyla yok")
+		say("et!")
+		wait()
+		say_title("Lee Chung:")
+		say("Prens kharoon nerede saklanýyor acaba?")
+		pc.give_item2("31008",1)
+		set_state(tartarus)
+		return
+		end
+	end
+	
+	state tartarus begin
+		when letter begin
+		send_letter("General Tartarus")
+		end
+		
+		when button or info begin
+		say_title("General Tartarus")
+		say("Gökyüzünün gözyaþýný Þeytan Katakombu'nun")
+		say("beþinci katýna ulaþtýðýnda kullan. Þeytan")
+		say("Katakombu'nun giriþi Þeytan Kulesi'nin")
+		say("arkasýnda bulunur.")
+		end
+	end
+		
+	state rewards begin
+		when letter begin
+		say_title("Ödül")
+		say_reward("63000000 deneyim puaný kazandýn.")
+		say_reward("250000 Yang kazandýn.")
+		say_reward("Bilge Kralýn Eldiveni 1 adet kazandýn.")
+		say_reward("Büyülü Demir Maden 1 adet kazandýn.")
+		say_reward("Bilge Kralýn Sembolü 1 adet kazandýn.")
+		pc.give_exp2("63000000")
+		pc.change_gold("250000")
+		pc.give_item2("70051",1)
+		pc.give_item2("71026",1)
+		pc.give_item2("70050",1)
+		set_quest_state("prince_kharoon","run")
+		clear_letter()
+		set_state(complete)
+		end
+	end
+	
+	state complete begin
+	end
+end

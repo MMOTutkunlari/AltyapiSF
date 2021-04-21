@@ -1,0 +1,235 @@
+quest new_quest_lv80 begin     
+    state start begin 
+        when login or levelup with pc.level >= 80 begin
+            local v = find_npc_by_vnum(20023) 
+            if 0 != v then 
+            target.vid("__TARGET__", v, "Soon") 
+            end  
+        end 
+
+        when __TARGET__.target.click or 20023.chat."Ateþ ve Buz" with pc.get_level() >= 80 begin
+		target.delete("__TARGET__")
+		say_title("Karamsar Ahþap Maske") 
+		say("Ah tam zamanýnda! Duydum ki yakýn zamanda Sürgün") 
+		say("Maðarasýndaymýþsýn öyle mi?") 
+		say("Oradan dönen biriyle ilk kez karþýlaþýyorum.") 
+		say("Ýtiraf etmeliyim ki meraklandým...")
+		wait()
+		say("Senin için bir görevim var, ama biraz zor. Ancak,") 
+		say("senin gibi bir adam bunun üstesinden gelebilir.") 
+		say("Bu Karamsar Ahþap Maskeyi al ve Doyyumhwan") 
+		say("bölgesine git. Orada Alev Hayaletlerini bul.") 
+		say("Onlarý tanýyor olmalýsýn - tamamen alevle kaplý ")
+		say("küresel yaratýklar.") 
+		say("Eðer onlardan birini öldürürsen, maske harekete") 
+		say("geçecek ve küllere dönüþecek. Ýlk seferde")
+		say("olmazsa, cesaretini kaybetme.")
+		say("Daha sonra külleri bana getir.")
+		wait()
+		say("Eðer daða gideceksen, bana 10 adet Buz Parçasý ")
+		say("getir. Onlara çok ihtiyacým var.")
+		say("Yetiler genelde yanlarýnda Buz Parçasý taþýr!")
+		say("Öyleyse ne bekliyorsun?")
+		pc.give_item2("30183", 1) 
+		set_state(kill)
+		return             
+        end 
+    end
+
+    state kill begin
+        when letter begin
+			if pc.count_item("30183") > 0 then
+            send_letter("Ateþ ve Buz")
+			else
+			send_letter("Karamsar Ahþap Maske")
+			end
+        end
+		
+        when button or info begin 
+		say_title("Ateþ ve Buz") 
+		say("Soon bana þu görevi verdi...")
+			if pc.count_item("30146") < 10 and pc.count_item("30184") < 1 then
+			say("Ýhtiyacým olan:")
+			say_reward(""..10-pc.count_item("30146").." x")
+			say_item_vnum(30146)
+			say_reward("1 x")
+			say_item_vnum(30184)
+			elseif pc.count_item("30146") >= 10 and pc.count_item("30184") < 1 then
+			say("Buz Parçalarýný buldum.")
+			say("Ýhtiyacým olan:")
+			say_reward("1 x")
+			say_item_vnum(30184)
+			elseif pc.count_item("30146") < 10 and pc.count_item("30184") >= 1 then
+			say("Ýhtiyacým olan:")
+			say_reward(""..10-pc.count_item("30146").." x")
+			say_item_vnum(30146)
+			say("Karamsar Ahþap Maske, Efsunlu Küllere dönüþtü.")
+			elseif pc.count_item("30146") >= 10 and pc.count_item("30184") >= 1 then
+			say("Buz Parçalarýný buldum.")
+			say("Karamsar Ahþap Maske, Efsunlu Küllere dönüþtü.")
+			end
+			if pc.count_item("30183") < 1 and pc.count_item("30184") < 1 then
+			say_reward("Yanýmda")
+			say_item_vnum(30183)
+			say_reward("taþýmalýyým. Soon'a göre Alev Hayaletleri")
+			say_reward("öldürdüðümde maske Efsunlu Küllere dönüþecek.")
+			end
+		end
+		
+		when kill begin 
+		if npc.get_race() == 2202 and pc.count_item("30183") > 0 then 
+        local n = number(1,500) 
+            if n <= 15 then
+            pc.remove_item("30183",1) 
+            pc.give_item2("30184",1)        
+            end
+			end
+        end
+		
+		when kill begin 
+		if npc.get_race() == 1106 then
+        local nn = number(1,200) 
+            if nn <= 15 then 
+            pc.give_item2("30146",1)
+			end
+			end
+		end
+		
+		when 20023.chat."Karamsar Ahþap Maske" with pc.get_level() >= 80 begin
+			if pc.count_item("30146") < 10 or pc.count_item("30184") < 1 then
+			say("Efsunlu Küller ya da Buz Parçalarý sende deðil.")
+			return
+			else
+			say("Þimdi sadece Efsunlu Küllere ve Buz Parçalarýna")
+			say("ihtiyacým var. Harika, biraz bekle...")
+			wait()
+			say("Ýþe yaradý! Eski yazýda anlatýlanlar doðruymuþ!")
+			say("Bana getirdiðin eþyalarla Siyah Buz ürettim.")
+			say("Ýlkine baðlý olarak senden ikinci bir isteðim")
+			say("var. Bunu da tamamlarsan, sana tüm birikimlerimi")
+			say("vereceðim!")
+			say("Siyah Buzu Sürgün Maðarasýna götür ve Karanlýk")
+			say("Tapýnakta kurban et.")
+			pc.remove_item("30184",pc.count_item("30184"))
+			pc.remove_item("30146",pc.count_item("30146"))
+			pc.give_item2("30185",1)
+			set_state(gototapinak)
+			end
+		end
+    end
+
+
+	state gototapinak begin 
+        when letter begin 
+        local v = find_npc_by_vnum(30123) 
+            if v != 0 then  
+            target.vid("__TARGET3__", v, "tapinak") 
+            end
+        end
+		
+        when 30123.chat."Siyah Buzu Kurban Et!" with pc.count_item("30185") >= 1 begin  
+        target.delete("__TARGET3__")
+		say_title("Karanlýk Tapýnak") 
+		say("Sunaða vardýðýnda çevrene bir karanlýk") 
+		say("yayýlýyor. Karanlýkta sahipsiz sesler sana")
+		say("sonsuz ýzdýraplarýný fýsýldýyorlar.")
+		say("Burasý gerçekten lanetli bir yer. Siyah Buzu")
+		say("gerçekten kurban etmek istiyor musun?")
+		local s = select("Evet! En kötü ne olabilir ki?","Hayýr, bu iþ gözyaþýyla bitebilir!")
+			if s == 1 then
+			say("Hala doðru yapýp yapmadýðýmdan emin deðilim -")
+			say("maðarada bir þey kurban etmek... Eminim Ejderha")
+			say("Tanrý bunu onaylamaz. Keþke geri alabilseydim.")
+            pc.remove_item("30185",pc.count_item("30185"))
+            set_state(backtosoon)
+			return
+			elseif s == 2 then
+			say("Sanýrým en doðrusu buydu. Þimdi bu Siyah")
+			say("buzu denize atýp ondan kurtulmalýyým.")
+			set_state(go_to_deniz)
+			return
+			end
+		end
+	end
+	
+	state go_to_deniz begin
+		when letter begin
+			if pc.get_empire() == 1 then
+			target.pos("p1", 790, 642, 1, "Siyah Buz ")
+			elseif pc.get_empire() == 2 then
+			target.pos("p1", 230, 1091, 21, "Siyah Buz ")
+			elseif pc.get_empire() == 3 then
+			target.pos("p1", 850, 298, 41, "Siyah Buz ")
+			end
+		send_letter("Siyah Buz")
+		end
+		
+		when button or info begin
+		say_title("Siyah Buz")
+		say("Siyah Buzu denize at.")
+		end
+		
+		when p1.target.arrive begin
+        target.delete("p1")
+		local at = select("Siyah Buz'u denize at!","Vazgeç ")
+			if at == 2 then
+			return
+			else
+			say("Maðaranýn içinde bir þeyleri kurban etmek")
+			say("gerçekten de çýlgýnca bir fikirdi. En iyisi")
+			say("Soon'a hiç bir þey olmamýþ gibi davranmak.")
+			pc.setqf("lanetsiz",1)
+			pc.remove_item("30185",pc.count_item("30185"))
+			set_state(backtosoon)
+			return
+			end
+		end
+	end
+	
+	state backtosoon begin 
+		when letter begin 
+        send_letter("Soon'a geri dön.")   
+            local v = find_npc_by_vnum(20023) 
+            if 0 != v then  
+            target.vid("__TARGET4__", v, "Soon") 
+            end 
+        end
+		
+        when button or info begin  
+		say_title("Karanlýk Tapýnak") 
+		say("Soon'a geri dönüp ödülümü almalýyým.")
+        end
+		
+        when __TARGET4__.target.click begin
+        target.delete("__TARGET4__")
+		say_title("Karanlýk Tapýnak") 
+		say("Harika! Ýþte ödülün.")
+		pc.give_exp2(120000000) 
+        pc.change_money(3000000)
+			if pc.getqf("lanetsiz") == 0 then
+			set_state(lanetlendin)
+			else
+			pc.delqf("lanetsiz")
+			set_state(complete)
+			end
+        end
+	end
+	
+	state lanetlendin begin
+		when letter begin
+		q.set_title("Ýlginç Canavarlar") 
+		q.start()
+		end
+		
+		when button or info begin
+		say_title("Ýlginç Canavarlar")
+		say("Ülkenin bazý kesimlerinde ilginç canavarlarýn")
+		say("görüldüðünü duydum.")
+		say("Umarým Siyah Buzu Sürgün Maðarasýnda kurban etmem")
+		say("gerçeðiyle ilgili yapýlacak bir þey yoktur.")
+		end
+	end
+	
+	state complete begin
+	end
+end

@@ -1,0 +1,141 @@
+quest halloween begin
+    state start begin
+      when 33008.chat."Þiþþt balkabaðý kafalý!" begin
+	say_title ( "Jack Pumpkin" )
+	say( "Neredeyim? Sen de kimsin?" ) 
+		wait()
+	say_title ( "Jack Pumpkin" )
+	say( "Aðzýndan çýkaný kulaðýn duysun! Ben balkabaðý " ) 
+	say( "kafalý deðilim! Benim adým Jack Pumpkin." ) 
+	say( "Üzerimdeki sadece bir kostüm. Biraz þaþkýným " ) 
+	say( "çünkü az önce bir Cadýlar Bayramý " ) 
+	say( "eðlencesindeydim ve birden bire etrafýmdaki " ) 
+	say( "herþey dönmeye baþladý. Þimdi de buradayým..." ) 
+		wait()
+	say_title ( "Jack Pumpkin" )
+	say( "Þimdi býrak da doyasýya Cadýlar Bayramý'ný " ) 
+	say( "kutlayayým!" ) 
+	setstate(maske)
+					end
+				end
+	state maske begin
+		when 33008.chat."Jack Pumpkin Maskesi Kartý'ný bozdur" begin
+	say_title("Jack Pumpkin")
+	say("Yine mi sen! Sana birþey söyleyeyim mi? Cadýlar") 
+	say("Bayramý Sandýðý'ndan þansýna belki bir kabak") 
+	say("maskesi kartý çýkabilir.") 
+		wait()
+	say_title("Jack Pumpkin")
+	say("Bu kartla böyle bir ürkütücü kabak maskesine") 
+	say("sahip olabilirsin. Maske ister misin?")
+            local a = select("Evet, Çok Ýsterim.","Hayýr, Teþekkürler.")
+            if a == 2 then
+	say_title("Jack Pumpkin")
+	say("Korkmana gerek yok çok eðlenceli olacak.") 
+            elseif a == 1 then
+	if pc.count_item(30323) > 0 then
+	say_title("Jack Pumpkin")
+	say("Sana korkunç bir maske veriyorum.") 
+	say("Bu ülkedeki yaratýklar artýk senden korkacak.") 
+		wait()
+else
+	say_title("Jack Pumpkin")
+		say("Kabak maskesi kartýn yok mu? O halde kabak")
+		say("maskesi de alamazsýn! Haha!.")
+		wait()
+	say_title("Jack Pumpkin")
+		say("Cadýlar Bayramý kabaðýný büyü asasýyla Cadýlar")
+		say("Bayramý Sandýðý'na dönüþtürebilirsin. Kabaklarý ")
+		say("canavarlar düþürüyor, büyü asasýný da kimse")
+		say("çalmasýn diye dönen paranýn arkasýna sakladým.")
+		say("Þansýný dene bakalým!")
+				wait()
+				return
+			end
+	say_title("Jack Pumpkin")
+	say("Karakterini seç þimdi.") 
+	local s = select("SAVAÞÇI","SURA","NÝNJA","ÞAMAN","Vazgeç ")
+	if s == 1 then
+	say_title("Jack Pumpkin")
+		say("Cinsiyetini seç.")
+	local ss = select("Savaþçý (e)","Savaþçý (d)","Vazgeç ")
+	if ss == 1 then
+	say_title("Jack Pumpkin")
+		say("Bu saç stili sayesinde artýk yaratýklar")
+		say("senden korkacak. Onlarý þimdi yenmelisin.")
+		pc.remove_item(30323,1)
+        pc.give_item2(74020,1)
+	
+	elseif ss == 2 then
+	say_title("Jack Pumpkin")
+		say("Bu saç stili sayesinde artýk yaratýklar")
+		say("senden korkacak. Onlarý þimdi yenmelisin.")
+		pc.remove_item(30323,1)
+        pc.give_item2(75020,1)
+	elseif ss == 3 then
+	return
+	end
+	elseif s == 2 then
+	say_title("Jack Pumpkin")
+		say("Cinsiyetini seç.")
+	local sss = select("Sura (e)","Sura (d)","Vazgeç ")
+	if sss == 1 then
+	say_title("Jack Pumpkin")
+		say("Bu saç stili sayesinde artýk yaratýklar")
+		say("senden korkacak. Onlarý þimdi yenmelisin.")
+		pc.remove_item(30323,1)
+        pc.give_item2(74520,1)
+	elseif sss == 2 then
+	say_title("Jack Pumpkin")
+		say("Bu saç stili sayesinde artýk yaratýklar")
+		say("senden korkacak. Onlarý þimdi yenmelisin.")
+		pc.remove_item(30323,1)
+        pc.give_item2(75420,1)
+	elseif sss == 3 then
+	return
+	end
+	elseif s == 3 then
+	say_title("Jack Pumpkin")
+		say("Cinsiyetini seç.")
+	local ssss = select("Ninja (e)","Ninja (d)","Vazgeç ")
+	if ssss == 1 then
+	say_title("Jack Pumpkin")
+		say("Bu saç stili sayesinde artýk yaratýklar")
+		say("senden korkacak. Onlarý þimdi yenmelisin.")
+		pc.remove_item(30323,1)
+        pc.give_item2(75220,1)
+	elseif ssss == 2 then
+	say_title("Jack Pumpkin")
+		say("Bu saç stili sayesinde artýk yaratýklar")
+		say("senden korkacak. Onlarý þimdi yenmelisin.")
+		pc.remove_item(30323,1)
+        pc.give_item2(74270,1)
+	elseif ssss == 3 then
+	return
+	end
+	elseif s == 4 then
+	say_title("Jack Pumpkin")
+		say("Cinsiyetini seç.")
+	local sssss = select("Þaman (e)","Þaman (d)","Vazgeç ")
+	if sssss == 1 then
+	say_title("Jack Pumpkin")
+		say("Bu saç stili sayesinde artýk yaratýklar")
+		say("senden korkacak. Onlarý þimdi yenmelisin.")
+		pc.remove_item(30323,1)
+        pc.give_item2(75620,1)
+	elseif sssss == 2 then
+	say_title("Jack Pumpkin")
+		say("Bu saç stili sayesinde artýk yaratýklar")
+		say("senden korkacak. Onlarý þimdi yenmelisin.")
+		pc.remove_item(30323,1)
+        pc.give_item2(74770,1)
+	elseif sssss == 3 then
+	return
+	end
+	elseif s == 5 then
+	return
+end
+end
+end
+end
+			end

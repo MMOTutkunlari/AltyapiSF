@@ -1,0 +1,14 @@
+quest event_colfirtinasi_2014 begin
+	state start begin
+		when 691.kill or 791.kill or 792.kill or 1192.kill or 1304.kill or 1901.kill or 2091.kill or 2191.kill or 2206.kill or 2306.kill or 2595.kill or 2596.kill or 3090.kill or 3091.kill or 3190.kill or 3191.kill or 3290.kill or 3291.kill or 3390.kill or 3391.kill or 3490.kill or 3491.kill or 3590.kill or 3591.kill or 3595.kill or 3596.kill or 3690.kill or 3691.kill or 3790.kill or 3791.kill or 3890.kill or 3891.kill or 3901.kill or 3902.kill or 3903.kill or 3904.kill or 3905.kill or 3906.kill or 6091.kill or 6191.kill or 8001.kill or 8002.kill or 8003.kill or 8004.kill or 8005.kill or 8006.kill or 8007.kill or 8008.kill or 8009.kill or 8010.kill or 8011.kill or 8012.kill or 8013.kill or 8014.kill or 8024.kill or 8025.kill or 8026.kill or 8027.kill or 8051.kill or 8052.kill or 8053.kill or 8054.kill or 8055.kill or 8056.kill with game.get_event_flag("col_firtinasi_drop") == 1 and not npc.is_pc() begin
+			if npc.get_level() > pc.get_level() - 10 then
+				local s = number(1,25)
+				if s == 1 then
+				game.drop_item_with_ownership("38054",1)
+				return
+				end
+			end
+		end
+	end
+end
+

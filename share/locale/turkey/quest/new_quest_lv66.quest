@@ -1,0 +1,447 @@
+quest anonymous_letter begin
+	state start begin
+	end
+	
+	state run begin
+		when letter with pc.level >= 66 begin
+		set_state(info)
+		end
+	end
+	
+	state info begin
+		when letter with pc.get_level() >= 66 begin
+		send_letter("Mektubun var.")
+		end
+		
+		when button or info begin
+		say_title("Mektubun var.")
+		say("")
+		say("Köy meydanýnýn nöbetçisinin sana mektubu var.")
+		say("Oku ve gizemli gönderenin kim olduðunu öðren.")
+		say("")
+		end
+		
+		when 11000.chat."Mektubun var." or 11002.chat."Mektubun var." or 11004.chat."Mektubun var." begin
+		say_title("Köy Gardiyaný:")
+		say("")
+		say("Son zamanlarda pek görünmüyorsun. Sana bu mektubu ")
+		say("vermemi istediler - kimden olduðunu bilmiyorum,")
+		say("bana kendini tanýtmadý.")
+		say("")
+		wait()
+		say_title("Köy Gardiyaný:")
+		say("")
+		say("Mektubun yazýldýðý kaðýt çok eski görünüyor.")
+		say("Aceleyle þunlar yazýlmýþ:")
+		say("Yedi Ejderha Rahibesi ve Sung Mahi ile ilgili")
+		say("önemli bilgilere sahibim. Þeytan Kulesi'nin arka")
+		say("kýsmýnda, Hwang Tapýðnaðý'nda seni bekliyorum. Beni")
+		say("aðacýn gölgesinde bulacaksýn. Acele et, fazla")
+		say("vaktimiz yok!")
+		say("")
+		set_state(anonim)
+		end
+	end
+	
+	state anonim begin
+		when letter with pc.get_level() >= 60 begin
+		local v = find_npc_by_vnum(20369)
+			if v != 0 then
+			target.vid("__TARGET__", v, "LeeChung")
+			end
+		send_letter("Anonim Mektup")
+		end
+		when button or info begin
+		say_title("Anonim Mektup")
+		say("")
+		say("Köy meydanýnýn nöbetçisinin sana mektubu var.")
+		say("Oku ve gizemli gönderenin kim olduðunu öðren.")
+		say("")
+		end 
+		
+		when 20369.chat."Anonim Mektup" begin
+		target.delete("__TARGET__")
+		say_title("Lee Chung:")
+		say("")
+		say("Hoþgeldin! Önce izninle kendimi tanýtayým: Adým")
+		say("Lee Chung.")
+		say("Yabancý birinin talimatýna uyman cesaretli")
+		say("olduðunu gösteriyor. Yanýlmamýþým - sen de buna")
+		say("piþman olmayacaksýn.")
+		say("Söyleyeceklerimi iyi dinle!")
+		say("")
+		set_state(anonim2)
+		end
+	end
+	
+	state anonim2 begin
+		when letter with pc.get_level() >= 66 begin
+		local v = find_npc_by_vnum(20369)
+			if v != 0 then
+			target.vid("__TARGET2__", v, "LeeChung")
+			end
+		send_letter("Yeni Kötülük")
+		end
+		
+		when button or info begin
+		say_title("Yeni Kötülük")
+		say("")
+		say("Lee Chung'un anlatacaklarýný iyi dinle.")
+		say("")
+		end
+		
+		when 20369.chat."Yeni Kötülük" begin
+		target.delete("__TARGET2__")
+		say_title("Lee Chung:")
+		say("")
+		say("Hwang Tapýnaðý'na gelmeni gerektiren bir durum")
+		say("var: Son zamanlarda burada tuhaf þeyler oluyor.")
+		say("Kýsa zaman önce de Þeytan Kulesi'nin arka")
+		say("tarafýnda devasa bir maðaraya giden bir yol")
+		say("bulduk!")
+		say("")
+		wait()
+		say_title(""..pc.get_name()..":")
+		say("")
+		say("Devasa bir maðara mý? Peki içinde ne var?")
+		say("")
+		wait()
+		say_title("Lee Chung:")
+		say("")
+		say("Bu maðarada yeni, akýl almaz bir kötülük")
+		say("bekliyor: Casuslarýmýz þeytanlarý bile geride")
+		say("býrakan, dehþet verici bir yaratýktan bahsetti.")
+		say("Korkutucu görüntüsü ve canlýlara karþý doymak")
+		say("bilmeyen aç gözlülüðü nedeniyle onun þeytan")
+		say("dünyasýnýn on büyük þeytanýndan biri olan")
+		say("efsanevi Agwi olduðunu düþünüyoruz.")
+		say("Eðer haklýysak insanoðlu büyük tehlike altýnda.")
+		say("")
+		wait()
+		say_title(""..pc.get_name()..":")
+		say("")
+		say("Þeytanlardan daha korkutucu demek... Bu yaratýk")
+		say("gerçekten de çok güçlü ve kötü olmalý.")
+		say("")
+		wait()
+		say_title("Lee Chung:")
+		say("")
+		say("Evet öyle. Adamlarým ve ben defalarca Þeytan")
+		say("Katakombu'na girmeyi denedik. Ama her seferinde")
+		say("baþarýsýz olduk ve büyük kayýplar verdik.")
+		say("Bu iþte mükemmel bir savaþçýya ihtiyacýmýz var -")
+		say("seni buraya çaðýrmamýzýn nedeni bu. Bize yardým")
+		say("edecek misin?")
+		say("")
+		wait()
+		say_title(""..pc.get_name()..":")
+		say("")
+		say("Evet, sana yardým edeceðim.")
+		say("")
+		wait()
+		say_title("Lee Chung:")
+		say("")
+		say("Oh, artýk daha ümitliyiz! Bizim tarafýmýzda")
+		say("olduðunu bildiðim için sana bir gerçeði")
+		say("açýklayacaðým: Ben, Gölge Savaþçýlarý Kumandaný,")
+		say("Lee Chung. Lee Seops'un gizli seçkin")
+		say("bir birliðiyiz.")
+		say("")
+		wait()
+		say_title("Lee Chung:")
+		say("")
+		say("Gölge Savaþçýlarý evveli ezeli gizliden gizliye")
+		say("Sung Mahi'nin yeniden diriliþini engelleme")
+		say("çabasýnda. Bu bizim görevimiz. Birlikte Agwi'yi")
+		say("tekrar maðarasýna göndermeye ve dünyamýza nasýl")
+		say("geldiklerini öðrenmeye çalýþalým!")
+		say("")
+		set_state(anonim3)
+		return
+		end
+	end
+	
+	state anonim3 begin
+		when letter with pc.get_level() >= 66 begin
+		local v = find_npc_by_vnum(20369)
+			if v != 0 then
+			target.vid("__TARGET3__", v, "LeeChung")
+			end
+		send_letter("Zaman yok")
+		end
+		
+		when button or info begin
+		say_title("Zaman yok")
+		say("")
+		say("Gölge Savaþçýlarýnýn kumandaný Lee Chung seni")
+		say("arýyor. Çok acil.")
+		say("")
+		end
+		
+		when 20369.chat."Zaman yok" begin
+		target.delete("__TARGET3__")
+		say_title("Lee Chung:")
+		say("")
+		say("Senden acil bir ricam var. karþý taraftaki yaralý ")
+		say("askeri görüyor musun? O benim emrimde Þeytan")
+		say("Katakombu'nu araþtýran casuslarýmdan biri. Bu")
+		say("görev sýrasýnda Agwi tarafýndan saldýrýya uðradý ")
+		say("ve zehirlendi. Zehir vücuduna yayýlmaya baþladý ")
+		say("bile, fazla vakti kalmadý.")
+		say("")
+		wait()
+		say_title("Lee Chung:")
+		say("")
+		say("Panzehire ihtiyacý var - hem de hemen!")
+		say("Sen alabilir misin? Kýrmýzý Orman'da kýrmýzý ")
+		say("orman perilerini bulabilirsin. O, benim en")
+		say("önemli savaþçýlarýmdan biri - canýný kurtar ben")
+		say("de sana Kýrýk Porselen vereyim.")
+		say("")
+		wait()
+		say_title(""..pc.get_name()..":")
+		say("")
+		say("Panzehiri getireceðim!")
+		say("")
+		wait()
+		say_title("Lee Chung:")
+		say("")
+		say("Teþekkür ederim! Henüz hayatta ama her geçen")
+		say("saniye daha da zayýflýyor. Kaybedecek vaktimiz")
+		say("yok!")
+		pc.setqf("panzehir",get_time() + 30*60)
+		set_state(panzehir)
+		return
+		end
+	end
+	
+	state panzehir begin
+		when letter with pc.get_level() >= 66 begin
+		send_letter("Panzehir")
+		end
+		
+		when button or info begin
+		local time = pc.getqf("panzehir") - get_time()
+		local time_remaining = math.floor(time / 60)
+		say_title("Panzehir")
+		say("")
+		say("Lee Chung sayesinde panzehiri Kýrmýzý Orman'da")
+		say("bulabileceðini biliyorsun. Bunun için 200 Kýrmýzý ")
+		say("Orman Perisi'ni yakala.")
+		say("Kýrmýzý Orman, Hayalet Orman'dan daha tehlikeli,")
+		say("kendine dikkat et.")
+			if pc.getqf("panzehir") - get_time() > 0 then
+			say(""..time_remaining.." dakikan kaldý.")
+			else
+			say("Süre geçti. Asker ölmek üzere. Ona hemen")
+			say("panzehiri götür.")
+			end
+		say("")
+		q.set_clock("Kalan süre:", time)
+		q.set_counter("Kýrmýzý Orman Perisi:", 200-pc.getqf("kill_count"))
+		end
+		
+		when kill begin
+		if npc.get_race() == 2313 then
+		pc.setqf("kill_count",pc.getqf("kill_count") + 1)
+		q.set_counter("Kýrmýzý Orman Perisi:", 200-pc.getqf("kill_count"))
+			if pc.getqf("kill_count") == 200 then
+			pc.give_item2("31003",1)
+			set_state(panzehirialdýn)
+			end
+			end
+		end
+	end
+	
+	state panzehirialdýn begin
+		when letter with pc.get_level() >= 66 begin
+		send_letter("Panzehir")
+		end
+		
+		when button or info begin
+		say_title("Panzehir")
+		say("")
+		say("Nihayet panzehiri buldun! Onu hemen Lee Chung'a")
+		say("götür.")
+		say("")
+		end
+		
+		when 20369.chat."Panzehir" begin
+		target.delete("__TARGET4__")
+		say_title("Lee Chung:")
+		say("")
+		say("Çok zaman harcadýn. Son gücüyle hayatta kalmaya")
+		say("neyseki son anda yetiþebildin.")
+		say("")
+		wait()
+		say_title("Lee Chung:")
+		say("")
+		say("Ýþe yarýyor sanýrým. Ama çok ucu ucuna yetiþtin,")
+		say("ama panzehiri bulmak amacýyla bu kadar çok zaman")
+		say("kaybettiðin için neredeyse ölüyordu.")
+		say("Çok üzgünüm, ama ödül olarak verebileceðim tek")
+		say("þey bu.")
+		say("")
+		wait()
+			if pc.getqf("panzehir") - get_time() > 0 then
+			say_reward("2900000 deneyim puaný kazandýn.")
+			say_reward("200000 Yang kazandýn.")
+			say_reward("6 Adet beceri kitabi kazandin.")
+			pc.remove_item("31003",1)
+			pc.give_exp2("2900000")
+			pc.change_gold("200000")
+			pc.give_item2("50300",6)
+			else	
+			say_reward("2000000 deneyim puaný kazandýn.")
+			say_reward("100000 Yang kazandýn.")
+			say_reward("6 Adet beceri kitabi kazandin.")
+			pc.remove_item("31003",1)
+			pc.give_exp2("2000000")
+			pc.change_gold("100000")
+			pc.give_item2("50300",6)
+			end
+		pc.delqf("kill_count")
+		set_state(spy_report)
+		end
+	end
+	
+	state spy_report begin
+		when letter with pc.get_level() >= 66 begin
+		local v = find_npc_by_vnum(20370)
+			if v != 0 then
+			target.vid("__TARGET5__", v, "zehirliasker")
+			end
+		send_letter("Rapor")
+		end
+		
+		when button or info begin
+		say_title("Rapor")
+		say("")
+		say("Casus kendine geldi. Þeytan Katakombu'nda neler")
+		say("gördüðünü dile.")
+		say("")
+		end
+		
+		when 20370.chat."Rapor" begin
+		target.delete("__TARGET5__")
+		say_title("Zehirlenen Asker")
+		say("")
+		say("Beni kurtardýðýn için teþekkür ederim. Þeytan")
+		say("Katakombu'nda inanýlmaz þeyler gördüm. Ama sonra")
+		say("yakalandým ve...")
+		say("")
+		wait()
+		say_title(""..pc.get_name()..":")
+		say("")
+		say("Neler gördün?")
+		say("")
+		wait()
+		say_title("Zehirlenen Asker")
+		say("")
+		say("Kara pelerinli, yüzlerikara kapüþonlarýyla")
+		say("örtülü insanlar vardý.")
+		say("Ettikleri bir iki lakýrdýdan Karanlýðýn Köleleri")
+		say("olduklarýný anladým. Ama dahasý da var:")
+		say("Kadýn siluetine benzeyen dehþetli bir ruh,")
+		say("baþlarýnýn üzerinde uçuyordu. Karanlýðýn Köleleri")
+		say("bunlara Banshee diyordu.")
+		say("")
+		wait()
+		say_title(""..pc.get_name()..":")
+		say("")
+		say("Bu kulaða pek iyi gelmiyor. Karanlýðýn Köleleri")
+		say("ve Banshee'nin amacý ne?")
+		say("")
+		wait()
+		say_title("Zehirlenen Asker")
+		say("")
+		say("Banshee kara büyüyle cehennem yarýðýndan gelen")
+		say("Agwi'ye þeytansý varlýklara büyü yaptý.")
+		say("Agwiler'in Kralýna Azrail diyorlardý.")
+		say("")
+		wait()
+		say_title("Zehirlenen Asker")
+		say("")
+		say("Lee Chung'a bunu rapor etmek için hemen yola")
+		say("koyuldum. Ama ayaðým takýldý ve düþtüm.")
+		say("Ah, bu arada Kumandan Lee")
+		say("Chung sana önemli bir þey söyleyecekti. En iyisi")
+		say("hemen yanýna git.")
+		say("")
+		set_state(leechung1)
+		end
+	end
+	
+	state leechung1 begin
+		when letter with pc.get_level() >= 66 begin
+		local v = find_npc_by_vnum(20369)
+			if v != 0 then
+			target.vid("__TARGET6__", v, "LeeChung")
+			end
+		send_letter("Karanlýk Tehdit")
+		end
+		
+		when button or info begin
+		say_title("Karanlýk Tehdit")
+		say("")
+		say("Lee Chung'a git ve onunla Þeytan")
+		say("Katakombu'ndaki yeni tehditle ilgili konuþ.")
+		say("")
+		end
+		
+		when 20369 chat."Karanlýk Tehdit" begin
+		target.delete("__TARGET6__")
+		say_title("Lee Chung:")
+		say("")
+		say("Casusumun raporu korkutucu, deðil mi? Agwiler'in")
+		say("ortaya çýkmasýndan bir türlü tarikat olan")
+		say("Karanlýðýn Köleleri sorumluymuþ. Son Ejderha")
+		say("Rahibesi'nin ruhunu uyandýrdýlar.")
+		say("O da, kötünün görüntüsü Banshee olarak dünyaya")
+		say("geri döndü ve büyülü güçleri sayesinde Þeytan")
+		say("Tanrýsý Sung Mahi'yi çaðýracak.")
+		say("")
+		wait()
+		say_title(""..pc.get_name()..":")
+		say("")
+		say("Ne? Bu Banshee son Ejderha Rahibesi'nin ruhu")
+		say("muymuþ?")
+		say("")
+		wait()
+		say_title("Lee Chung:")
+		say("")
+		say("Kesinlikle. Ejderha kültündeki kardeþleri")
+		say("arasýnda gökyüzünün dört kutsal nöbetçisini")
+		say("çaðýrma ve kara büyü yapma gücüne bir tek o")
+		say("sahipti. Artýk bu yeni tehditin arkasýnda kim")
+		say("olduðunu biliyoruz: Karanlýðýn Köleleri ve")
+		say("Banshee karanlýk milletin dehþet verici")
+		say("eserini tamamlamaya ve Sung Mahi'yi uyandýrmaya")
+		say("çalýþýyor!")
+		say("")
+		wait()
+		say_title("Lee Chung:")
+		say("")
+		say("Sana çok þey borçluyuz: En iyi adamlarýndan")
+		say("birini ölümden kurtardýn ve bu þekilde")
+		say("Agwi'nin birden bire belirmesi ve Þeytan")
+		say("Katakombu'ndaki yeni tehditlerle ilgili bilgiler")
+		say("edinebildik. Þimdi biraz dinlen - sonra")
+		say("uygun bir taktik düþünürüz.")
+		wait()
+		say_title("Lee Chung:")
+		say("")
+		say("Macera seviye 72'ye ulaþtýðýnda devam edecek.")
+		say("")
+		clear_letter()
+		set_state(complete)
+		set_quest_state("spy_report","run")
+		return
+		end
+	end
+	
+	state complete begin
+	end
+end
+			
+		

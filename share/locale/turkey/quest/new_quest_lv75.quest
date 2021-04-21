@@ -1,0 +1,489 @@
+quest new_quest_lv75 begin
+	state start begin
+		when login or levelup with pc.level >= 75 and not pc.is_gm() begin
+		set_state(info)
+		end
+	end
+	
+	state info begin
+		when letter begin
+			local v=find_npc_by_vnum(20090)
+			if 0==v then
+			else
+			target.vid("__TARGET__", v, "20090")
+			end
+		send_letter("Bir Efsanenin Günlüðü ")
+		end
+			
+		when info or button begin
+		say_title("Bir Efsanenin Günlüðü ")
+		say("Heuk-Young seni arýyor.")
+		say("Ona git ve ne için seni aradýðýný öðren.")
+		say("Onu Sürgün Maðarasýnda bulabilirsin.")
+		end
+		when __TARGET__.target.click or 20090.chat."Bir Efsanenin Günlüðü " with pc.get_level() >= 75 begin
+		target.delete("__TARGET__")
+		say_title(""..mob_name(20090).."")
+		say("")
+		say("Merhabalar,")
+		say("Bu maðaradaki bir günlüðü araþtýrýyorum.")
+		say("Burda daha önce araþtýrma yapan,")
+		say("bir Sura vardý. Ýçerlerde bir yerlerde")
+		say("onunla ve günlüðün sayfalarýyla ilgili")
+		say("kanýtlar bulacaðýna inanýyorum.")
+		say("Lütfen benim için bu Sura'yý araþtýr.")
+		say("")
+		say("Ýyi þanslar.")
+		set_state(go1)
+		end
+	end
+	state go1 begin
+		when letter begin
+		send_letter("Günlük sayfalarýný ara")
+		end
+		
+		when info or button begin
+		say_title("Günlük sayfalarýný ara")
+		say("Sura-Ýskeletlerini ara ve sayfalarý araþtýr.")
+		say("Heuk-Young için 15 tane günlük sayfasý bulmalýsýn.")
+		say("")
+		say_reward("Sura-Ýskeleti 1'i ara!")
+		end
+		
+		when 30124.chat."Günlük sayfasý " begin
+		say_title(""..mob_name(30124).."")
+		say("")
+		say("Evet orda yatan bir ceset var.")
+		say("Harika 2 sayfa buldum Heuk-Young çok sevinecek.")
+		say("Sura-Ýskeleti 2'yi aramalýyým.")
+		pc.give_item2("30181", 1)
+		pc.give_item2("30181", 1)
+		set_state(go2)
+		end
+	end
+	
+	state go2 begin
+		when letter begin
+		send_letter("Günlük sayfalarýný ara")
+		end
+	
+		when info or button begin
+		say_title("Günlük sayfalarýný ara")
+		say("Sura-Ýskeletlerini ara ve sayfalarý topla.")
+		say("15 günlük sayfasýný toplayýnca Heuk-Young'a git.")
+		say("")
+		say_reward("Sura-Ýskeleti 2'i ara!")
+		end
+		when 30125.chat."Günlük sayfasý " begin
+		say_title(""..mob_name(30125).."")
+		say("")
+		say("Ahhh orda yatan bir ceset var.")
+		say("Harika bir sayfa daha buldum Heuk-Young çok")
+		say("sevinecek. Sura-Ýskeleti 3'ü aramalýyým.")
+		pc.give_item2("30181", 1)
+		set_state(go3)
+		end
+	end
+	
+	state go3 begin
+		when letter begin
+		send_letter("Günlük sayfalarýný ara")
+		end
+		when info or button begin
+		say_title("Günlük sayfalarýný ara")
+		say("Sura-Ýskeletlerini ara ve sayfalarý topla.")
+		say("15 günlük sayfasýný toplayýnca Heuk-Young'a git.")
+		say("")
+		say_reward("Sura-Ýskeleti 3'i ara!")
+		end
+	when 30126.chat."Günlük sayfasý " begin
+		say_title(""..mob_name(30126).."")
+		say("")
+		say("Evet orda yatan bir ceset var.")
+		say("Harika 2 sayfa buldum Heuk-Young çok sevinecek.")
+		say("Sura-Ýskeleti 4'ü aramalýyým.")
+		pc.give_item2("30181", 1)
+		pc.give_item2("30181", 1)
+		set_state(go4)
+		end
+	end
+	
+	state go4 begin
+		when letter begin
+		send_letter("Günlük sayfalarýný ara")
+		end
+		when info or button begin
+		say_title("Günlük sayfalarýný ara")
+		say("Sura-Ýskeletlerini ara ve sayfalarý topla.")
+		say("15 günlük sayfasýný toplayýnca Heuk-Young'a git.")
+		say("")
+		say_reward("Sura-Ýskeleti 4'i ara!")
+		end
+		when 30127.chat."Günlük sayfasý " begin
+		say_title(""..mob_name(30127).."")
+		say("")
+		say("Evet orda yatan bir ceset var.")
+		say("Harika 3 sayfa buldum Heuk-Young çok sevinecek.")
+		say("Sura-Ýskeleti 5'i aramalýyým.")
+		pc.give_item2("30181", 1)
+		pc.give_item2("30181", 1)
+		pc.give_item2("30181", 1)
+		set_state(go5)
+		end
+	end
+	state go5 begin
+		when letter begin
+		send_letter("Günlük sayfalarýný ara")
+		end
+		when info or button begin
+		say_title("Günlük sayfalarýný ara")
+		say("Sura-Ýskeletlerini ara ve sayfalarý topla.")
+		say("15 günlük sayfasýný toplayýnca Heuk-Young'a git.")
+		say("")
+		say_reward("Sura-Ýskeleti 5'i ara!")
+		end
+		when 30128.chat."Günlük sayfasý " begin
+		say_title(""..mob_name(30128).."")
+		say("")
+		say("Bütün sayfalarý bulduk. 9 adet")
+		say("sayfa topladýn. Þimdi geri kalanýný ")
+		say("Yeraltý Buz Golemlerini öldürerek temin edebilirsin.")
+		say("Ýyi Þanslar...")
+		pc.give_item2("30181", 1)
+		set_state(go6)
+		end
+	end
+	state go6 begin
+		when letter begin
+		send_letter("Günlük sayfalarýný ara")
+		end
+		when info or button begin
+		say_title("Günlük sayfalarýný ara")
+		say("Sura-Ýskeletlerinden tüm sayfalar bulundu.")
+		say("Geri kalanlarý Yeraltý Buz Golemlerinde olmalý.")
+		say("Onlarý araþtýrmalýyým.")
+		end
+		when kill begin
+		if npc.get_race() == 1137 then
+		local s = number(1, 4)
+			if s <= 5 and pc.count_item(30181) < 15 then
+			pc.give_item2(30181, 1)
+			end	
+			if pc.count_item(30181) >= 15 then
+			set_state(go7)
+			end
+			end
+		end
+		when login or levelup begin
+			if pc.count_item(30181) >= 15 then
+			set_state(go7)
+			end
+		end
+	end
+	
+	state go7 begin
+		when letter begin
+		send_letter("Sayfalarý aldým!")
+		local v=find_npc_by_vnum(20090)
+			if 0==v then
+			else
+			target.vid("__TARGET1__", v, "20090")
+			end
+		end
+		when info or button begin
+		say_title("Sayfalarý aldým!")
+		say("15 sayfayýda topladým.")
+		say("Heuk-Young'a geri dönmeliyim.")
+		end
+		when __TARGET1__.target.click or 20090.chat."Sayfalarý aldým!" begin
+			target.delete("__TARGET1__")
+			if pc.count_item(30181) >= 15 then
+			say_title("Bir Efsanenin Günlüðü ")
+			say("")
+			say("Maðarada bu kadar çok þey bulmana þaþýrdým. Bu")
+			say("sayfalar bir kitabýn parçasý gibi. Burada")
+			say("yazýlanlar gerçekten çok ilginç. Duyduðum tüm")
+			say("hikayelerle birleþtirince bir anlam kazanýyor...")
+			say("Eðer bana sayfalarý verirsen onlarý bir kitap ")
+			say("haline getireceðim. Sürgün maðarasýna girdiðinde ")
+			say("iþe yarayabilir. Eðer senin iþine yaramazsa, ")
+			say("senden satýn alacak birini bulabiliriz.")
+			say("")
+			wait()
+			say("Sayfalarý kitap haline getirdim ve bazý notlarýmý ")
+			say("da ekledim. Sana yararlý olabilir. Ýstersen sana")
+			say("hikayenin geri kalanýný da anlatabilirim.")
+			wait()
+			say("Hee-Se hanedanýnda Akuma isimli efsanevi bir Sura")
+			say("yaþamýþtý. Savaþta çok yetenekliydi ve her")
+			say("rakibini kendi gücünü test etmek için")
+			say("kullanýrdý. Bir gün, gizli bir yer hakkýnda")
+			say("mühürlenmiþ notlar buldu ve hayatýný bu yeri")
+			say("bulmaya adadý. Kapýlarýn nasýl açýldýðýný ")
+			say("öðrendi. Eylemlerini bitirdikten sonra aþký ")
+			say("Sumni'ye geri dönmeye söz verdi... Ancak")
+			say("geri dönemedi.")
+			pc.remove_item(30181,pc.count_item("30181"))
+			pc.give_item2("30182", 1)
+			pc.change_money( 1200000 )
+			pc.give_exp2(90000000)
+			set_state(COMPLETE)
+			else
+			say_title(""..mob_name(20090).."")
+			say("")
+			say("Sayfalar 15 tane deðil..")
+			end
+		end
+	end
+	
+	state COMPLETE begin
+		when 30182.use begin
+		local oku = select("Buz Canavarý ","Umutsuzluðun kýyýsýnda","Karanlýk dehþet","Ölümün yüzü ","Savaþçýnýn kaderi")
+			if oku == 1 then
+			say("Sararmýþ parþömendeki yazý, sanki yaþlý ve zayýf")
+			say("biri tarafýndan yazýlmýþ gibi soluk ve titrek:")
+			say("''...Buz Yaratýklarý. Sura güçlerim bile onlarý ")
+			say("yenmeme yetmedi. Bazýlarý hala maðarada dolaþýyor")
+			say("ve beni bulmamalarý için çok dikkatli olmalýyým.")
+			say("Kýsa zaman öncesine kadar bana koruma")
+			say("önermiþlerdi, ama þimdi...'' Bu noktada sayfa")
+			say("gözden kayboluyor.")
+			elseif oku == 2 then
+			say("Sayfa çok eski. Üstteki tarihten bunun bir günlük")
+			say("olduðu anlaþýlýyor: ''Maðarayý ararken farklý ")
+			say("davrandýðýmý ilk kez fark etmiyorum. Kendimle çok")
+			say("övünüyordum ve mutluydum! Tüm bunlar beni ani")
+			say("ölümüme sürükledi...'' Ölüm kelimesinin altý ")
+			say("çizilmiþti.")
+			elseif oku == 3 then
+			say("Parþömen çok yýpranmýþ ve yer yer kopmuþ. Sadece")
+			say("þunlar okunuyor:")
+			say("''...Ýmparator mahkemesi... bilginler bunu")
+			say("çaresizce öðrenmek istediðimi düþündüklerinde...")
+			say("kapý kolayca açýldý ama... karanlýkta ölüm ve")
+			say("kargaþa...'' Büyük ve dik bir yýrtýk gerisini")
+			say("okumaný engelliyor.")
+			elseif oku == 4 then
+			say("Parþömenin bu sayfasýnda bir karalama bulacaksýn:")
+			say("Bu bir kadýnýn yüzü. Bunun altýnda tanýdýk bazý ")
+			say("kelimeler yazýlý. Ancak bunlar daha titrek ve")
+			say("huzursuz: '' Ölümdü beni pençesine alan - bunu dün")
+			say("fark ettim. Korku beni almadan ve geri çekilmeden")
+			say("önce yaratýða sadece bir an baktým. Ah Sumni,")
+			say("keþke bilseydim! Bu tarif edilemez korkuyu")
+			say("bilseydim, bu noktaya gelmezdim!''")
+			elseif oku == 5 then
+			say("Hee-Sae Hanedanýnda Akuma isimli efsanevi bir Sura")
+			say("yaþamýþtý. Savaþta çok yetenekliydi ve her")
+			say("rakibini, kendi gücünü test etmek için")
+			say("kullanýrdý. Bir gün, gizli bir yer hakkýnda")
+			say("mühürlenmiþ notlar buldu ve hayatýný bu yeri")
+			say("bulmaya adadý. Kapýlarýn nasýl açýldýðýný ")
+			say("öðrendi. Eylemlerini bitirdikten sonra aþký ")
+			say("Sumni'ye geri dönmeye söz verdi... ancak geri")
+			say("dönemedi.")
+			end
+		end
+		
+		when 20023.chat."Bir Efsanenin Günlüðü " with pc.count_item(30182) >= 1  begin
+		say_title("Bir Efsanenin Günlüðü ")
+		say(""..mob_name(20023)..":")
+		say("Elinde tuttuðun çok ilginç bir kitap. Nereden")
+		say("geldi? Bakabilir miyim?")
+		wait()
+		say("Bunlar Sürgün Maðarasýndan gelen notlar deðil mi?")
+		say("Eski görünüyorlar. Yazým alýþýlmamýþ ve telaffuz")
+		say("çok eski... Bu tür bir kitabý elde etmek kolay")
+		say("olmamýþtýr. Bunu ellerimde tutmak çok hoþ. Bunu")
+		say("satmak ister misin?")
+		local sat = select("Evet.","Hayýr.")
+			if sat == 2 then
+			say("Ne utanç verici. Neyse, belki fikrini")
+			say("deðiþtirirsin.")
+			else
+				if pc.getqf("satmadin") >= 2 then
+				say("Bu cömertliðimin sýnýrý. Sana Efsanevi Günlük için")
+				say("500,000 Yang vereceðim.")
+				say("Al ya da git!")
+				local al7 = select("500,000 Yang alacaðým.","Unut bunu.")
+					if al7 == 2 then
+					say("Tamam, unut bunu.")
+					pc.setqf("satmadin",pc.getqf("satmadin") + 1)
+					else
+					pc.delqf("satmadin")
+					pc.change_gold(500000)
+					pc.remove_item("30182",pc.count_item("30182"))
+					set_state(__complete)
+					end
+				else
+				say("Kitap için kaç Yang istersin?")
+				local fiyat = tonumber(input(""))
+					if fiyat > 3000000 and fiyat <= 6000000 then
+					local ver = math.floor(fiyat / 2)
+					say("Hayýr, üzgünüm benim için çok pahalý.")
+					say("Baþka bir öneri yapayým. Sana Efsanevi Günlük")
+					say("için "..ver.." Yang vereceðim.")
+					say("Anlaþtýk mý?")
+					local al = select(""..ver.." Yang alacaðým.","Sanýrým iþ yapamayacaðýz.")
+						if al == 2 then
+						say("Nasýl istersen...")
+						say("Kitap için kaç Yang istersin?")
+						local fiyat2 = tonumber(input(""))
+							if fiyat2 >= fiyat and fiyat2 <= 10000000 then
+							local ver2 = ver - math.floor(ver / 10)
+							say("Hayýr, üzgünüm benim için çok pahalý.")
+							say("Baþka bir öneri yapayým. Sana Efsanevi Günlük")
+							say("için "..ver2.." Yang vereceðim.")
+							say("Anlaþtýk mý?")
+							local al2 = select(""..ver2.." Yang alacaðým.","Sanýrým iþ yapamayacaðýz.")
+								if al2 == 2 then
+								say("Nasýl istersen. Belki fikrini deðiþtirirsin.")
+								pc.setqf("satmadin",pc.getqf("satmadin") + 1)
+								else
+								pc.delqf("satmadin")
+								pc.change_gold(ver2)
+								pc.remove_item("30182",pc.count_item("30182"))
+								set_state(__complete)
+								end
+							elseif fiyat2 < fiyat and fiyat2 > 3000000 and fiyat2 <= 10000000 then
+							local ver3 = math.floor(fiyat2 / 2)
+							say("Hayýr, üzgünüm benim için çok pahalý.")
+							say("Baþka bir öneri yapayým. Sana Efsanevi Günlük")
+							say("için "..ver3.." Yang vereceðim.")
+							say("Anlaþtýk mý?")
+							local al3 = select(""..ver3.." Yang alacaðým.","Sanýrým iþ yapamayacaðýz.")
+								if al3 == 2 then
+								say("Nasýl istersen. Belki fikrini deðiþtirirsin.")
+								pc.setqf("satmadin",pc.getqf("satmadin") + 1)
+								else
+								pc.delqf("satmadin")
+								pc.change_gold(ver3)
+								pc.remove_item("30182",pc.count_item("30182"))
+								set_state(__complete)
+								end
+							elseif fiyat2 > 10000000 then
+							say("Bu cömertliðimin sýnýrý. Sana Efsanevi Günlük için")
+							say("500,000 Yang vereceðim.")
+							say("Al ya da git!")
+								local al27 = select("500,000 Yang alacaðým.","Unut bunu.")
+								if al27 == 2 then
+								say("Tamam, unut bunu.")
+								pc.setqf("satmadin",pc.getqf("satmadin") + 1)
+								else
+								pc.delqf("satmadin")
+								pc.change_gold(500000)
+								pc.remove_item("30182",pc.count_item("30182"))
+								set_state(__complete)
+								end
+							else
+							pc.delqf("satmadin")
+							pc.change_gold(fiyat2)
+							pc.remove_item("30182",pc.count_item("30182"))
+							set_state(__complete)
+							end
+						else
+						pc.delqf("satmadin")
+						pc.change_gold(ver)
+						pc.remove_item("30182",pc.count_item("30182"))
+						set_state(__complete)
+						end
+					elseif fiyat < 3000000 then
+					pc.delqf("satmadin")
+					pc.change_gold(fiyat)
+					pc.remove_item("30182",pc.count_item("30182"))
+					set_state(__complete)
+					elseif fiyat > 6000000 and fiyat <= 10000000 then
+					local ver4 = fiyat - 6000000
+					local ver5 = math.floor(ver4 / 10)
+					local ver6 = 3000000 + ver5
+					say("Hayýr, üzgünüm benim için çok pahalý.")
+					say("Baþka bir öneri yapayým. Sana Efsanevi Günlük")
+					say("için "..ver6.." Yang vereceðim.")
+					say("Anlaþtýk mý?")
+					local al4 = select(""..ver6.." Yang alacaðým.","Sanýrým iþ yapamayacaðýz.")
+						if al4 == 2 then
+						say("Nasýl istersen...")
+						say("Kitap için kaç Yang istersin?")
+						local fiyat3 = tonumber(input(""))
+							if fiyat3 >= fiyat and fiyat3 <= 10000000 then
+							local ver7 = math.floor(ver6 / 10)
+							local ver8 = ver6 - ver7
+							say("Hayýr, üzgünüm benim için çok pahalý.")
+							say("Baþka bir öneri yapayým. Sana Efsanevi Günlük")
+							say("için "..ver8.." Yang vereceðim.")
+							say("Anlaþtýk mý?")
+							local al5 = select(""..ver8.." Yang alacaðým.","Sanýrým iþ yapamayacaðýz.")
+								if al5 == 2 then
+								say("Nasýl istersen. Belki fikrini deðiþtirirsin.")
+								pc.setqf("satmadin",pc.getqf("satmadin") + 1)
+								else
+								pc.delqf("satmadin")
+								pc.change_gold(ver8)
+								pc.remove_item("30182",pc.count_item("30182"))
+								set_state(__complete)
+								end
+							elseif fiyat3 < fiyat then
+							local ver111 = math.floor(ver6 / 10)
+							local ver9 = ver6 + ver111
+							say("Hayýr, üzgünüm benim için çok pahalý.")
+							say("Baþka bir öneri yapayým. Sana Efsanevi Günlük")
+							say("için "..ver9.." Yang vereceðim.")
+							say("Anlaþtýk mý?")
+							local al6 = select(""..ver9.." Yang alacaðým.","Sanýrým iþ yapamayacaðýz.")
+								if al6 == 2 then
+								say("Nasýl istersen. Belki fikrini deðiþtirirsin.")
+								pc.setqf("satmadin",pc.getqf("satmadin") + 1)
+								else
+								pc.delqf("satmadin")
+								pc.change_gold(ver9)
+								pc.remove_item("30182",pc.count_item("30182"))
+								set_state(__complete)
+								end
+							elseif fiyat3 < 3000000 then
+							pc.delqf("satmadin")
+							pc.change_gold(fiyat3)
+							pc.remove_item("30182",pc.count_item("30182"))
+							set_state(__complete)
+							elseif fiyat3 > 10000000 then
+							say("Bu cömertliðimin sýnýrý. Sana Efsanevi Günlük için")
+							say("500,000 Yang vereceðim.")
+							say("Al ya da git!")
+							local al17 = select("500,000 Yang alacaðým.","Unut bunu.")
+								if al17 == 2 then
+								say("Tamam, unut bunu.")
+								pc.setqf("satmadin",pc.getqf("satmadin") + 1)
+								else
+								pc.change_gold(500000)
+								pc.delqf("satmadin")
+								pc.remove_item("30182",pc.count_item("30182"))
+								set_state(__complete)
+								end
+							end
+						else
+						pc.delqf("satmadin")
+						pc.change_gold(ver6)
+						pc.remove_item("30182",pc.count_item("30182"))
+						set_state(__complete)
+						end
+					else
+					say("Bu cömertliðimin sýnýrý. Sana Efsanevi Günlük için")
+					say("500,000 Yang vereceðim.")
+					say("Al ya da git!")
+					local al7 = select("500,000 Yang alacaðým.","Unut bunu.")
+						if al7 == 2 then
+						say("Tamam, unut bunu.")
+						pc.setqf("satmadin",pc.getqf("satmadin") + 1)
+						else
+						pc.change_gold(500000)
+						pc.delqf("satmadin")
+						pc.remove_item("30182",pc.count_item("30182"))
+						set_state(__complete)
+						end
+					end
+				end
+			end
+		end
+	end
+	state __complete begin
+	end
+end

@@ -1,0 +1,72 @@
+quest pet_system begin
+    state start begin
+        function get_pet_info(itemVnum)
+            pet_info_map = {
+            --  [ITEM VNUM] MOB_VNUM, DEFAULT NAME, buff_idx, spawn_effect_idx
+                [53001]     = { 34001, "'s Anka Kuþu ", 0},
+                [53002]     = { 34002, "'s Ren Geyiði Yavrusu ", 0},
+                [53003]     = { 34003, "'s Buz Ankasý ", 0},
+                [53005]     = { 34004, "'s Yavru Azrail ", 0},
+				[53006]		= { 34009, "'s Yavru Azrail(altýn) ", 0},
+                [53007]     = { 34010, "'s Bambi ", 0},
+				[53008]		= { 34011, "'s Knuud ", 0},
+				[53009]		= { 34012, "'s Bao Bao ", 0},
+                [53010]     = { 34008, "'s Leonidas ", 0},
+                [53011]     = { 34007, "'s Khan ", 0},
+                [53012]     = { 34005, "'s Porki ", 0},
+                [53013]     = { 34006, "'s Rufus ", 0},
+				[53014]     = { 34013, "'s Cellatcýk ", 0},
+				[53015]     = { 34014, "'s Cellatcýk(altýn) ", 0},
+				[53016]     = { 34015, "'s Boney ", 0},
+				[53017]     = { 34016, "'s Yeþim Ankasý ", 0},
+                [38200]     = { 34006, "'s Rufus ", 0},
+                [38201]     = { 34006, "'s Rufus ", 0},
+				[53018]     = { 34017, "'s Kar Leonidas ", 0},
+				[53019]     = { 34018, "'s Arktik Khan ", 0},
+				[53020]     = { 34019, "'s Kutup Porki ", 0},
+				[53021]     = { 34020, "'s Ayaz Rufus ", 0},
+				[53022]     = { 34021, "'s Sheldon ", 0},
+				[53023]     = { 34022, "'s Cooper ", 0},
+				[53024]     = { 34023, "'s Panter Yavrusu ", 0},
+				[53025]     = { 34024, "'s Leopar Yavrusu ", 0},
+            }
+
+            itemVnum = tonumber(itemVnum)
+
+            return pet_info_map[itemVnum]
+        end
+		function get_spawn_effect_file(idx)
+			effect_table = {
+				[0] = nil,
+				[1] = "d:\\\\ymir work\\\\effect\\\\etc\\\\buff\\\\buff_item3.mse",
+			}
+			return effect_table [idx]
+		end
+		when 38200.use or 38201.use or 53001.use or 53002.use or 53003.use or 53015.use or 53005.use or 53006.use or 53007.use or 53008.use or 53009.use or 53010.use or 53011.use or 53012.use or 53016.use or 53014.use or 53013.use or 53017.use or 53018.use or 53019.use or 53020.use or 53021.use or 53022.use or 53023.use or 53024.use or 53025.use begin
+            local pet_info = pet_system.get_pet_info(item.vnum)
+
+            if null != pet_info then
+
+                local mobVnum = pet_info[1]
+                local petName = pet_info[2]
+				local spawn_effect_file_name = pet_system.get_spawn_effect_file(pet_info[3])
+
+                if true == pet.is_summon(mobVnum) then
+					if spawn_effect_file_name != nil then
+						pet.spawn_effect (mobVnum, spawn_effect_file_name)
+					end
+                    pet.unsummon(mobVnum)
+                else
+                    if pet.count_summoned() < 1 then
+                        pet.summon(mobVnum, petName, false)
+                    else
+                        syschat(" Zaten bir evcil hayvan çaðýrdýn. ")
+                    end
+					if spawn_effect_file_name != nil then
+						pet.spawn_effect(mobVnum, spawn_effect_file_name)
+					end
+                end -- if pet.is_summon
+            end  -- if null != pet_info
+        end -- when
+    end -- state
+end -- quest

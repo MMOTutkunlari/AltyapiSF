@@ -1,0 +1,432 @@
+quest horse_upgrade2 begin
+        state start begin
+                when 20349.chat."Atimi gelistirmek istiyorum." with horse.get_grade()==2 and
+horse.get_level()==20 begin
+                        if horse.is_dead() then
+                                say_title("Seyis:")
+                                say("Ölü bir ati gelistiremezsin!")
+                                say("Git ve Maymun Zindanindan ")
+                                say("atini canlandirmam için ")
+                                say("gerekli olan sifali otlari getir.")
+                                say("Ondan sonra atini gelistirmen hakkinda")
+                                say("konusabiliriz")
+                        elseif pc.level<=49 then
+                                say_title("Seyis:")
+                                say("")
+                                say("Seviyen atini gelistirmek için yeterli degil.")
+                                say("Atini gelistirebilmen için en azindan 50. seviyeye")
+                                say("ulasmis olman gerekiyor.")
+                                say("Hazir oldugunda yine gel.")
+                        elseif horse.get_level()<=19 then
+                                say_title("Seyis:")
+                                say("")
+                                say("Atinin seviyesi her hangi bir gelistirme için")
+                                say("çok düsük.Git ve binicilik becerini gelistirmek")
+                                say("için çalis. Atin 50. seviyeye ulastiginda")
+                                say("tekrar gel.")
+                        elseif pc.countitem("50050")<1 then
+                                say_title("Seyis:")
+                                say("")
+                                say("Eger atini gelistirmek istiyorsan, öncelikle ")
+                                say("dogal yetenek testini geçmelisin. Önceki gibi,")
+                                say("bu teste katilabilmen için bir at madalyonun")
+                                say("olmasi gerekiyor. Onu Maymun Zindanindan")
+                                say("bulabilirsin. Tabii ki, maymunlar savasmadan")
+                                say("onu almana izin vermeyeceklerdir...")
+                                say("Çöldeki (2) Maymun Zindanina git.")
+                                say("")
+                                setstate(need_item50050)
+                        elseif pc.countitem("50052")<1 then
+                                say_title("Seyis:")
+                                say("")
+                                say("Bunu gerçekten tekrar söylemeli miyim?")
+                                say("Eger ata binmek istiyorsan, lisansini yaninda")
+                                say("tasimak zorundasin!")
+                        elseif horse.get_level()==20 and not horse.is_dead() and pc.countitem("50050")>=1 and pc.level>=50 then
+                                say_title("Seyis:")
+                                say("")
+                                say("Sadece dünyanin en iyileri asker at")
+                                say("kitabi sahibi olabilirler.")
+                                say("Þeytan Kulesi'ne git ve")
+                                say("300 seytan okçusu öldür.")
+                                say("Eger bunu basarirsan, asker at ")
+                                say("kitabi alabilirsen kimsenin yakinmaya")
+                                say("hakki olmaz.")
+                                say("Tabii ki bu zor bir görev.")
+                                say("Onu grup olarak yapabilirsin,")
+                                say("fakat grup lideri sen olman gerekiyor.")
+                                say("")
+                                local b=select("Anlastik", "iptal")
+                                if 1==b then
+                                        if pc.countitem("50050")>=1 then
+                                                pc.removeitem("50050", 1)
+                                                setstate(test)
+                                        end
+                                elseif 2==b then
+                                        say("Hmm.. o zaman.. daha sonra gel..")
+                                else
+                                        say("UNKNOWN BUTTON ["..b.."]")
+                                end
+                        else
+                                say_title("Seyis:")
+                                say("")
+                                say("Asker at kitabini alabilecegini")
+                                say("sanmiyorum.")
+                                say("Garip, Nedenini bilmiyorum...")
+                                say("Sanirim bunu Game-Master'a sormak zorundasin.")
+                        end
+                end
+        end
+        state need_item50050 begin
+                when letter begin
+                        setskin(NOWINDOW)
+                        makequestbutton("Bir at madalyonu al!")
+                        q.set_title("Bir at madalyonu al!")
+                        q.start()
+                end
+                when button begin
+                        say_title("Bir at madalyonu al!")
+                        say("")
+                        say_reward("Asker at kitabi sinavina katilabilmek için,")
+                        say_reward("bir at madalyonuna ihtiyacin var. At madalyonunu")
+                        say_reward("Maymun Zindanindan temin edebilirsin.")
+                        say("")
+                        setstate(start)
+                        q.done()
+                end
+                when info begin
+                        say_title("Bir at madalyonu al!")
+                        say("")
+                        say_reward("Asker at kitabi sinavina katilabilmek için,")
+                        say_reward("bir at madalyonuna ihtiyacin var. At madalyonunu")
+                        say_reward("Maymun Zindanindan temin edebilirsin.")
+                        say("")
+                        setstate(start)
+                        q.done()
+                end
+        end
+        state test begin
+                when letter begin
+                        q.set_counter("Kalan seytan okçusu :", 300-pc.getqf("kill_count"))
+                end
+                when 1002.party_kill begin
+                        pc.setqf("kill_count", pc.getqf("kill_count")+1)
+                        q.set_counter("Kalan seytan okçusu:", 300-pc.getqf("kill_count"))
+                        if get_time()>=pc.getqf("limit_time") then
+                                setstate(failure)
+                                q.done()
+                        end
+                end
+                when letter begin
+                        q.set_clock("Kalan süre:", pc.getqf("limit_time")-get_time())
+                end
+                when enter begin
+                        pc.setqf("limit_time", get_time()+30*60)
+                        pc.setqf("kill_count", 0)
+                end
+                when leave begin
+                        q.done()
+                end
+                when letter begin
+                        setskin(NOWINDOW)
+                        makequestbutton("Asker at kitabi dogal yetenek sinavi")
+                        q.set_title("Asker at kitabi dogal yetenek sinavi")
+                        q.start()
+                end
+                when button begin
+                        say_title("Asker at kitabi dogal yetenek sinavi")
+                        say("")
+                        say_reward("30 Dakika içerisinde")
+                        say_reward("300 seytan okçusu öldür ve")
+                        say_reward("seyis'in yanina dön.")
+                        say("")
+                        say("Bunu bir grupla yapabilirsin,")
+                        say("fakat grup lideri sen olmalisin.")
+                        say("")
+                end
+                when info begin
+                        say_title("Asker at kitabi dogal yetenek sinavi")
+                        say("")
+                        say_reward("30 Dakika içerisinde")
+                        say_reward("300 seytan okçusu öldür ve")
+                        say_reward("seyis'in yanina dön.")
+                        say("")
+                        say("Bunu bir grupla yapabilirsin,")
+                        say("fakat grup lideri sen olmalisin.")
+                        say("")
+                end
+                when 1002.party_kill with pc.getqf("kill_count") >= 300 and pc.getqf("limit_time")>=get_time() begin
+                        setstate(report)
+                end
+                when 20349.chat."Asker at kitabi dogal yetenek sinavi basladi." begin
+                        say_title("Seyis:")
+                        say("")
+                        say("30 dakika içerisinde")
+                        say("300 seytan okçusu öldür.")
+                        say("")
+                        say("Bunu bir grupla yapabilirsin,")
+                        say("fakat grup lideri sen olmalisin.")
+                        local b=select("Anlastik", "iptal")
+                        if 1==b then
+                        elseif 2==b then
+                                say_title("Seyis:")
+                                say("")
+                                say("Sinavi iptal etmek istediginden emin misin?")
+                                local b=select("Evet.", "Sadece sakaydi!")
+                                if 1==b then
+                                        say_title("Seyis:")
+                                        say("")
+                                        say("Haklisin, bir dahaki sefere bol sans.")
+                                        setstate(start)
+                                        q.done()
+                                elseif 2==b then
+                                        say_title("Seyis:")
+                                        say("")
+                                        say("Ivir zivirla geçirecek zamanin yok!")
+                                        say("Git ve seytan askerlerini mümkün olan")
+                                        say("en hizli sekilde öldür!")
+                                else
+                                        say("Bilinmeyen Buton["..b.."]")
+                                end
+                        else
+                                say("Bilinmeyen Buton ["..b.."]")
+                        end
+                end
+        end
+        state report begin
+                when letter begin
+                        setskin(NOWINDOW)
+                        makequestbutton("Seyis'in yanina dön")
+                        q.set_title("Seyis'in yanina dön")
+                        q.start()
+                end
+                when button begin
+                        say_title("Seyis'in yanina dön")
+                        say("")
+                        say_reward("Seyis'e sinav sonuçlarini")
+                        say_reward("anlat.")
+                        say("")
+                end
+                when info begin
+                        say_title("Seyis'in yanina dön")
+                        say("")
+                        say_reward("Seyis'e sinav sonuçlarini")
+                        say_reward("anlat.")
+                        say("")
+                end
+                when 20349.chat."At Gelistirme Sýnavý Sonuç Raporu" with horse.get_grade()!=2 begin
+                        setstate(start)
+                        q.done()
+                end
+                when 20349.chat."Sýnav sonuçlarý raporu." with horse.get_grade()==2 begin
+                        say_title("Seyis:")
+                        say("")
+                        say("iyi sonuç!")
+                        say("Eger atini simdi gelistirmek istiyorsan,")
+                        say("zýrhlý at kitabini , asker at kitabi ile ")
+                        say("degistirmelisin.. ")
+                        say("Hazirlanmasi biraz zaman alacagi için, daha sonra")
+                        say("gelsen iyi olur. Ahhh Evet, asker at kitabini")
+                        say("alabilmek için 1.000.000 Yang'a ihtiyacin var.")
+                        say("")
+                        if is_test_server() then
+                                pc.setqf("make_time", get_time()+10)
+                        else
+                                pc.setqf("make_time", get_time()+number(8, 16)*60*60)
+                        end
+                        setstate(wait)
+                end
+        end
+        state wait begin
+                when letter begin
+                        setskin(NOWINDOW)
+                        makequestbutton("Asker at kitabi için bekle.")
+                        q.set_title("Asker at kitabi için bekle")
+                        q.start()
+                end
+                when button begin
+                        say_title("Asker at kitabi için bekle")
+                        say("")
+                        say_reward("Seyis, asker at kitabini")
+                        say_reward("hazirlayana kadar bekle.")
+                        say("")
+                end
+                when info begin
+                        say_title("Asker at kitabi için bekle")
+                        say("")
+                        say_reward("Seyis, asker at kitabini")
+                        say_reward("hazirlayana kadar bekle.")
+                        say("")
+                end
+                when login with get_time()>=pc.getf("horse_upgrade2","make_time") begin
+                        setstate(buy)
+                end
+                when 20349.chat."Atin durumunun gelistirilmesi." with horse.get_grade()!=2 begin
+                        setstate(start)
+                        q.done()
+                end
+                when 20349.chat."Lisans hazir mi? " with horse.get_grade()==2 begin
+                        say_title("Seyis:")
+                        say("")
+                        say("Üzgünüm, biraz daha beklemelisin.")
+                        say("Ahhhh evet, sakin unutma.")
+                        say("Asker at kitabi için 1.000.000 Yang'a")
+                        say("ihtiyacin var.")
+                        say("")
+                end
+        end
+        state buy begin
+                when letter begin
+                        setskin(NOWINDOW)
+                        makequestbutton("Seyis'in yanina git.")
+                        q.set_title("Seyis'in yanina git.")
+                        q.start()
+                end
+                when button begin
+                        say_title("Seyis'in yanina git.")
+                        say("")
+                        say_reward("Seyis'in yanina git ve")
+                        say_reward("asker at kitabini al.")
+                        say_reward("Asker at kitabini almak için ihtiyacin")
+                        say_reward("olan; zýrhlý at kitabi ve 1.000.000 Yang")
+                        say("")
+                end
+                when info begin
+                        say_title("Seyis'in yanina git.")
+                        say("")
+                        say_reward("Seyis'in yanina git ve")
+                        say_reward("asker at kitabini al. ")
+                        say_reward("Asker at kitabini almak için ihtiyacin")
+                        say_reward("olan; zýrhlý at kitabi ve 1.000.000 Yang")
+                        say("")
+                end
+                when 20349.chat."Atin durumunun gelistirilmesi." with horse.get_grade()!=2 begin
+                        setstate(start)
+                        q.done()
+                end
+                when 20349.chat."Atin durumunun gelistirilmesi." with horse.get_grade()==2
+                and horse.get_level()!=20 begin
+                        setstate(start)
+                        q.done()
+                end
+                when 20349.chat."Lisans hazir!" with horse.get_grade()==2
+                and horse.get_level()==20 begin
+                        say_title("Seyis:")
+                        say("")
+                        say("Eger bir asker at kitabin varsa, senin")
+                        say("atin, yönetilmeden farkli stillerde")
+                        say("savasabilir. Asker at kitabi")
+                        say("çok az kiside bulunur ama...")
+                        say("Belki biraz pahali oldugunu düsünebilirsin?")
+                        say("Asker at kitabi için 1.000.000 Yang'a")
+                        say("ihtiyacin var.")
+                        say("Atini gelistirmek istiyor musun?")
+                        say("")
+                        local b=select("Ati gelistir.", "Ati gelistirme.", "Unut gitsin!")
+                        if 1==b then
+                                if pc.money>=1000000 then
+                                        if pc.countitem("50052")>=1 then
+                                                char_log(0, "HORSE_UPGRADE2", "BEGIN")
+                                                pc.changemoney(-1000000)
+                                                char_log(0, "HORSE_UPGRADE2", "DEC money 1000000")
+                                                pc.removeitem("50052", 1)
+                                                char_log(0, "HORSE_UPGRADE2", "DEC 50052 1")
+                                                horse.unride()
+                                                horse.advance()
+                                                horse.ride()
+                                                char_log(0, "HORSE_UPGRADE2", "INC horse_advance 1")
+                                                pc.give_item2("50053", 1)
+                                                char_log(0, "HORSE_UPGRADE2", "INC 50053 1")
+                                                pc.give_item2("50060", 1)
+                                                char_log(0, "HORSE_UPGRADE2", "INC 50060 1")
+                                                char_log(0, "HORSE_UPGRADE2", "END")
+                                                say_title("Seyis:")
+                                                say("")
+                                                say("Asker at kitabi sahibi oldugun zaman, atini her")
+                                                say("yerden çagirabilirsin. Eger onu")
+                                                say("kaybedecek olursan, yeniden satin")
+                                                say("almak zorunda kalirsin.")
+                                                say("Bu yüzden ona dikkat et.")
+                                                say("Her sey hazir oldugunda onu gelistirelim.")
+                                                say("")
+                                                setstate(start)
+                                                q.done()
+                                        else
+                                                say_title("Seyis:")
+                                                say("")
+                                                say("Asker at kitabini almak için bir")
+                                                say("zýrhlý at kitabina ihtiyacin var.")
+                                                say("")
+                                        end
+                                else
+                                        say_title("Seyis:")
+                                        say("")
+                                        say("ve tabii ki.. ayrica 1.000.000 Yang'a.")
+                                        say("")
+                                end
+                        elseif 2==b then
+                                say_title("Seyis:")
+                                say("")
+                                say("Lisans almak istedigin zaman geri dön.")
+                                say("")
+                        elseif 3==b then
+                                say_title("Seyis:")
+                                say("")
+                                say("Emin misin?")
+                                say("Eger su anda çikarsan, daha sonra sinava")
+                                say("en basindan baslamak zorundasin.")
+                                say("")
+                                local b=select("Evet", "Hayir")
+                                if 1==b then
+                                        setstate(start)
+                                elseif 2==b then
+                                else
+                                        say("Bilinmeyen Buton ["..b.."]")
+                                end
+                        else
+                                say("Bilinmeyen Buton ["..b.."]")
+                        end
+                end
+        end
+        state failure begin
+                when letter begin
+                        setskin(NOWINDOW)
+                        makequestbutton("Süre doldu!")
+                        q.set_title("Süre doldu!")
+                        q.start()
+                end
+                when button begin
+                        say_title("Süre doldu!")
+                        say("")
+                        say_reward("300 seytan okçusunu öldüremedin.")
+                        say_reward("Bu durumda, sinav sonucun")
+                        say_reward("basarisiz.")
+                        say("")
+                        say_reward("Tekrar denemek istedigin istedigin")
+                        say_reward("zaman, bir baska at madalyonu alip ")
+                        say_reward("seyis'in yanina git.")
+                        say("")
+                        setstate(start)
+                        q.done()
+                end
+                when info begin
+                        say_title("Süre doldu!")
+                        say("")
+                        say_reward("300 seytan okçusunu öldüremedin.")
+                        say_reward("Bu durumda, sinav sonucun")
+                        say_reward("basarisiz.")
+                        say("")
+                        say_reward("Tekrar denemek istedigin istedigin")
+                        say_reward("zaman, bir baska at madalyonu alip ")
+                        say_reward("seyis'in yanina git.")
+                        say("")
+                        setstate(start)
+                        q.done()
+                end
+        end
+        state __COMPLETE__ begin
+                when enter begin
+                        q.done()
+                end
+        end
+end

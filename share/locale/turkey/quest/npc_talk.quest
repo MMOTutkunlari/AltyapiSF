@@ -1,0 +1,21 @@
+quest npc_talk begin
+    state start begin
+		when 20091.chat."Marketi aç " begin
+			setskin(NOWINDOW)
+			npc.open_shop()
+		end
+
+		when 20093.chat."Marketi aç " begin
+                        setskin(NOWINDOW)
+                        npc.open_shop()
+                end
+		when 20016.chat."Marketi aç " begin
+                        setskin(NOWINDOW)
+                        npc.open_shop()
+                end
+	
+
+	end
+end
+
+

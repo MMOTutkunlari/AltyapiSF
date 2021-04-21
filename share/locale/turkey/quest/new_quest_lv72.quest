@@ -1,0 +1,141 @@
+quest icy_treasure begin
+	state start begin
+	end
+	
+	state run begin
+		when letter with pc.get_level() >= 72 begin
+		local v = find_npc_by_vnum(20369)
+			if v != 0 then
+			target.vid("__TARGET__", v, "leechung")
+			end
+		send_letter("Buzlu Hazine")
+		end
+		when button or info begin
+		say_title("Buzlu Hazine")
+		say("")
+		say("Komutan Lee Chung gökyüzünün gözyaþlarýnýn ilk")
+		say("maddesi olan mavi kristal esansýnýn  Sohan")
+		say("Daðý'ndaki dokuz kuyruðun efsanevi hazinesi")
+		say("olduðunu bildiriyor.")
+		say("Buz Golemleri, Yetiler ve Buz Adamlarýnýn uyanýk")
+		say("gözleri altýnda korunuyor. Mavi kristal esansýný ")
+		say("ele geçirmek için bu canavarlarý avla.")
+		say("Savaþa baþlamadan önce Lee Chung'la konuþ.")
+		say("")
+		end
+		
+		when 20369.chat."Buzlu Hazine" begin
+		target.delete("__TARGET__")
+		say_title("Lee Chung:")
+		say("")
+		say("Gölge Savaþçýlarýnýn büyücüleri Sohan Daðý'ndaki")
+		say("korkutucu Dokuz Kuyruk'un mavi esansý gözü gibi")
+		say("koruduðunu öðrendi.")
+		say("")
+		wait()
+		say_title("Lee Chung:")
+		say("")
+		say("Dokuz Kuyruk hazinesi Buz Golemleri, Yetiler ve")
+		say("Buz Adamlar tarafýndan korunuyor.")
+		say("Gökyüzünün gözyaþý için 50 mavi kristal esansý ")
+		say("gerekiyor.")
+		say("")
+		wait()
+		say_title("Lee Chung:")
+		say("")
+		say("Kýrmýzý cehennem taþýnýn ya Hwang Tapýnaðý'nda")
+		say("ya da Ateþ Diyarý'nda bulunduðu tahmin ediliyor.")
+		say("Daha fazla bilgi almak için casus gönderdim.")
+		say("")
+		set_state(maddeler)
+		return
+		end
+	end
+	
+	state maddeler begin
+		when kill begin
+		if npc.get_race() == 1105 or npc.get_race() == 1107 then
+		local luck = number(1,70)
+			if luck == 5 then
+			notice("Yendiðin canavarlarýn leþini incelerken mavi mavi")
+			notice("parlayan bir taþ buluyorsun. Bu mavi kristal")
+			notice("kristal esansý olmalý.")
+			notice(""..49 - pc.getqf("collect_count").." kristal esansý daha bulmalýsýn.")
+			pc.give_item2("31005",1)
+			end
+			end
+		end
+		
+		when login with pc.getqf("delay_time") <= get_time() begin
+		pc.delqf("daily_count")
+		end
+		
+		when 20369.chat."Buzlu Hazine" with pc.countitem("31005") > 0 begin
+			if pc.getqf("delay_time") - get_time() > 0 and pc.getqf("daily_count") >= 10 then
+			say("Bugünlük yeterince öðüt aldýn. Yarýn tekrar gel.")
+			say("")
+			else
+				if pc.getqf("daily_count") >= 10 then
+				pc.delqf("daily_count")
+				end
+				local chance = number(1,100)
+				if chance < 30 then
+				say_title("Lee Chung:")
+				say("")
+				say("Bu kristaller iþe yaramaz. Al, kendin gör:")
+				say("üzerilerinde yarýklar var. Bunlarý kullanabilmek")
+				say("için pürüzsüz olmalýlar. Aramaya devam et!")
+				say("")
+				pc.remove_item("31005",1)
+				pc.setqf("daily_count",pc.getqf("daily_count") + 1)
+				pc.setqf("delay_time",get_time() + 24*60*60)		
+				else
+					if pc.getqf("collect_count") >= 49 then
+					say_title("Lee Chung:")
+					say("Tüm mavi esanslarý topladýn. Ýçindeki")
+					say("dokuz kuyruðun gücünü hissedebiliyorum.")
+					say("Ýnanýlmaz... Enerjiden titriyorlar. Ýyi iþ ")
+					say("çýkardýn!")
+					wait()
+					say_title("Ödül")
+					say_reward("20000000 deneyim puaný kazandýn.")
+					say_reward("225000 Yang kazandýn.")
+					say_reward("Araþtýrmacýnýn Özütü 3 adet kazandýn.")
+					say_reward("Hýrsýz Eldiveni kazandýn.")
+					say_reward("Altýn Þans Parasý kazandýn.")
+					say("")
+					wait()
+					pc.give_exp2("20000000")
+					pc.change_gold("225000")
+					pc.give_item2("71035",3)
+					pc.give_item2("72006",1)
+					pc.give_item2("72024",1)
+					pc.give_item2("53009",1)   --- extra bao bao
+					say("Macera seviye 78'e ulaþtýðýnda devam edecek.")
+					pc.delqf("daily_count")
+					pc.delqf("collect_count")
+					pc.delqf("delay_time")
+					pc.remove_item("31005",pc.countitem("31005"))
+					set_quest_state("red_hell_quartz","run")
+					set_state(complete)
+					else
+					say_title("Lee Chung:")
+					say("")
+					say("Bunlar çok kaliteli. Böyle devam et! "..49-pc.getqf("collect_count").." adet")
+					say("daha getir.")
+					say("")
+					pc.remove_item("31005",1)
+					pc.setqf("collect_count",pc.getqf("collect_count") + 1)
+					pc.setqf("daily_count",pc.getqf("daily_count") + 1)
+					pc.setqf("delay_time",get_time() + 24*60*60)
+					end
+				end
+			end
+		end
+	end
+	
+	state complete begin
+	end
+end		
+		
+		

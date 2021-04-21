@@ -1,0 +1,186 @@
+quest spy_report begin
+	state start begin
+	end
+	
+	state run begin
+		when letter with pc.level >= 72 begin
+		set_state(info)
+		end
+	end
+	
+	state info begin
+		when letter begin
+		local v = find_npc_by_vnum(20369)
+			if v != 0 then
+			target.vid("__TARGET3__", v, "LeeChung")
+			end
+		send_letter("Aþýnmýþ Taþ Levha")
+		end
+		
+		when button or info begin
+		say_title("Aþýnmýþ Taþ Levha")
+		say("")
+		say("Gölge Savaþçýlarý Kumandaný Lee Chung seninle")
+		say("konuþmak istiyor.Þeytan Katakombu'nda Agwi'nin")
+		say("nasýl maðlup edilebileceðini öðrenmiþ.")
+		say("")
+		end
+		
+		when 20369 chat."Aþýnmýþ Taþ Levha" begin
+		target.delete("__TARGET3__")
+		say_title("Lee Chung:")
+		say("")
+		say("Agwi sýradan þeytanlar gibi pek kolay")
+		say("öldürülemez. Biz Gölge Savaþçýlarý akla")
+		say("gelebilecek her þeyi denedik - ama hep baþarýsýz")
+		say("olduk.")
+		say("")
+		wait()
+		say_title("Lee Chung:")
+		say("")
+		say("Ama artýk Ejderha Rahibelerinin kötü ruhlarý ")
+		say("defetmek için kutsal güç kullanma yeteneðine")
+		say("sahip olduklarýný öðrendim.")
+		say("")
+		wait()
+		say_title("Lee Chung:")
+		say("")
+		say("Kýrmýzý Orman'da bir zamanlar Ejderha")
+		say("Rahibeleri'nin kutsanmýþ tapýnaðý bulunur. Orada")
+		say("kültlerinin eski belgelerini ve harabelerini ara.")
+		say("Casuslar çalýlýklar arasýnda kalan aþýnmýþ taþ ")
+		say("levhalardan bahsediyor...")
+		say("Belki hakkýnda baþka ipuçlarý da bulabiliriz.")
+		set_state(gototaslevha)
+		return
+		end
+	end
+	
+	state gototaslevha begin
+		when letter with pc.get_level() >= 72 begin
+		local v = find_npc_by_vnum(20372)
+			if v != 0 then
+			target.vid("__TARGET4__", v, "taslevha")
+			end
+		send_letter("Keþif")
+		end
+		
+		when button or info begin
+		say_title("Keþif")
+		say("")
+		say("Lee Chung sayesinde Ejderha Rahibeleri'nin")
+		say("kutsal güçler kullanabildiðini biliyorsun. Bu")
+		say("kutsal güç kötülüðü savuþturan, çok eski beyaz")
+		say("bir büyü. Kýrmýzý Orman'da Lee Chung'un")
+		say("bahsettiði aþýnmýþ taþ levhayý bul ve daha çok")
+		say("þey öðren.")
+		say("")
+		end
+		
+		when 20372.chat."Keþif" or __TARGET4__.target.click begin
+		target.delete("__TARGET4__")
+		say("Uzun aramalar sonunda çalýlýklarýn arasýnda")
+		say("yüzyýllardýr burada öylece duran bir taþ levhaya")
+		say("denk geliyorsun. BU Lee Chung'un kastettiði")
+		say("eski levha olmalý! Zorlukla aþýnan yazýtlarý ")
+		say("çözmeye çalýþýyorsun.")
+		say("")
+		wait()
+		say_title("Aþýnmýþ Taþ Levha")
+		say("")
+		say("Gökyüzünün gözyaþý Ejderha Rahibeleri'nin en")
+		say("deðerli sýrrý. Üretilme sanatlarý kuþaklardýr")
+		say("gizleniyor ve gerektiði durumlarda kanla")
+		say("korunuyor. Agwi ve þeytanlar bu büyülü deðerli")
+		say("taþý taþýyan kimseye yaklaþamaz. GÖkyüzünün")
+		say("gözyaþý bir kez kutsal güçlerin kuuvetiyle")
+		say("doluysa etkisi muhteþem. Yedi güneþ boyunca")
+		say("gökteki kutup yýldýzý gibi parlýyor.")
+		say("")
+		wait()
+		say_title("Aþýnmýþ Taþ Levha")
+		say("")
+		say("Gökyüzünün gözyaþý tüm pýrýltýsýný kutsanmýþ aðaç ")
+		say("reçinesi, mavi kristal esansý ve cehennem")
+		say("kuvarsýndan alýr. Mavi kristal esansý Buz Diyarý ")
+		say("Hakimi tarafýndan bulunmalý.")
+		say("")
+		wait()
+		say("Bu yazýtýn önemli bir notunu aldýn. Lee Chung'a")
+		say("az önce okuduklarýn hakkýnda rapor ver.")
+		say("")
+		clear_letter()
+		pc.give_item2("30160",1)
+		set_state(leechungagit)
+		end
+	end
+	
+	state leechungagit begin
+		when 20369.chat."Keþif" with pc.countitem("30160") > 0 begin
+		say_title("Lee Chung:")
+		say("")
+		say("Sað salim döndün demek! Yüzünün ifadesinden")
+		say("anladýðým kadarýyla baþarýlý oldun!")
+		say("")
+		wait()
+		say_title(""..pc.get_name()..":")
+		say("")
+		say("Evet öyle! Aþýnmýþ taþ levha üzerindeki yazýlar")
+		say("sayesinde öðrendim ki kutsal güçler gökyüzünün")
+		say("gözyaþý adýndaki büyülü deðerli taþ sayesinde")
+		say("büyülenebilir.")
+		say("")
+		wait()
+		say_title("Lee Chung:")
+		say("")
+		say("Gökyüzünün gözyaþý...Gerçekten de varmýþ demek.")
+		say("Bunun nereden bulunabileceði konusunda bir ipucu")
+		say("bulabildin mi?")
+		say("")
+		wait()
+		say_title(""..pc.get_name()..":")
+		say("")
+		say("Gökyüzünün gözyaþýný üretmek için kutsanmýþ aðaç ")
+		say("reçinesi, Mavi kristal esansý ve kýrmýzý cehennem")
+		say("kuvarsý gerekir. Mavi kristal esansý Buz Diyarý ")
+		say("Hakimi'nden alýnabilir yazýyor.")
+		say("")
+		wait()
+		say_title("Lee Chung:")
+		say("")
+		say("Buz Diyarý Hakimi mi? Hmm... Kastedilen Sohan")
+		say("daðý herhalde. Ýpuçlarýný hemen Gölge")
+		say("Savaþçýlarýnýn büyücülerine göstereceðim,")
+		say("birlikte deðerlendireceðiz. Daha fazlasýný ")
+		say("öðrendiðim zaman sana haber veririm!")
+		say("")
+		wait()
+		say_title("Lee Chung:")
+		say("")
+		say("Bunu yaptýklarýnýn ödülü olarak al. Senden sýk")
+		say("sýk yardým isteyeceðim.")
+		say("")
+		wait()
+		say_title("Ödül")
+		say("")
+		say_reward("3100000 deneyim puaný kazandýn.")
+		say_reward("Tecrübe Yüzüðü kazandýn.")
+		say_reward("Bilinmeyen Ýlaç kazandýn.")
+		say_reward("Sargý Bezi kazandýn.")
+		pc.remove_item("30160",pc.countitem("30160"))
+		pc.give_exp2("3100000")
+		pc.give_item2("70005",1)
+		pc.give_item2("30009",1)
+		pc.give_item2("30039",1)
+		set_quest_state("icy_treasure", "run")
+		set_state(complete)
+		return
+		end
+	end
+	
+	state complete begin
+	end
+end
+		
+
+		

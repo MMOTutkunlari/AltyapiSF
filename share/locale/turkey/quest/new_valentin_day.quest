@@ -1,0 +1,39 @@
+quest new_valentin_day begin
+    state start begin
+      when kill with game.get_event_flag("valentin_drop") == 1 and not npc.is_pc() begin
+        local s = number(1, 250)
+		local sans = number(1,4)
+        local m = pc.get_sex()
+        if s <= 3 then
+            if m == 0 and sans == 1 then    
+              syschat("Bir sevgililer günü hediyesi buldun.")
+              pc.give_item2(50024,1)
+            elseif m == 0 and sans == 2 then
+              syschat("Bir sevgililer günü hediyesi buldun.")			
+              pc.give_item2(50025,1)     
+            elseif m == 0 and sans == 3 then 
+              syschat("Bir sevgililer günü hediyesi buldun.")
+              pc.give_item2(71146,1)    
+            elseif m == 0 and sans == 4 then 
+              syschat("Bir sevgililer günü hediyesi buldun.")
+              pc.give_item2(71147,1)   			  
+            end
+        end
+        if s >= 4 and s<=6 then
+            if m == 1 and sans == 1 then           
+              pc.give_item2(50031,1)
+              syschat("Bir sevgililer günü hediyesi buldun.")
+            elseif m == 1 and sans == 2 then  
+              pc.give_item2(50032,1)
+              syschat("Bir sevgililer günü hediyesi buldun.")         
+            elseif m == 1 and sans == 3 then  
+              pc.give_item2(71146,1)
+              syschat("Bir sevgililer günü hediyesi buldun.")      
+            elseif m == 1 and sans == 4 then  
+              pc.give_item2(71147,1)
+              syschat("Bir sevgililer günü hediyesi buldun.")      
+			end
+			end
+		end     
+	end
+end
