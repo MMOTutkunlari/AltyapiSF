@@ -1,0 +1,1 @@
+pack şifreleme metodu package dosyaları burada yer alır.
