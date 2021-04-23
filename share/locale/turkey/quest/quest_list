@@ -1,4 +1,3 @@
-anti_exp.quest
 arena_manager.quest
 assassin_shop_box.quest
 blacksmith.quest
@@ -23,7 +22,6 @@ collect_quest_lv94.quest
 couple_ring.quest
 cube.quest
 cube_opener_list.quest
-depozit.quest
 devilcatacomb_zone.quest
 deviltower_zone.quest
 dragon_lair.quest
@@ -122,7 +120,6 @@ skill_reset2.quest
 snow_dungeon.lua
 spider_dungeon_2floor.quest
 spider_dungeon_3floor_boss.quest
-teleport.quest
 training_grandmaster_skill.quest
 training_mount.quest
 upgrade_refine_scroll.quest

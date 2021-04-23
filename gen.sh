@@ -86,8 +86,8 @@ LOCALE = \"latin1\"" >> $md/$c/conf.txt
 				cat /dev/null > $md/$c/CONFIG
 				echo "HOSTNAME: auth
 CHANNEL: 1
-PORT: 11901
-P2P_PORT: 12901
+PORT: 11900
+P2P_PORT: 12900
 DB_PORT: $dbPort
 DB_ADDR: $sqlHostName
 PASSES_PER_SEC: 25
