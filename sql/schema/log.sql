@@ -145,6 +145,7 @@ CREATE TABLE `levellog` (
 	`name` varchar(16) DEFAULT NULL,
 	`level` int(11) unsigned DEFAULT NULL,
 	`time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	`account_id` int(11) unsigned DEFAULT NULL,
 	`pid` int(11) unsigned DEFAULT NULL,
 	`playtime` int(11) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;

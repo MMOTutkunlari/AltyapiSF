@@ -64,7 +64,7 @@ SQL_PLAYER = \"$sqlHostName player $sqlUserPass $mysqlPort\"
 SQL_COMMON = \"$sqlHostName common $sqlUserPass $mysqlPort\"
 SQL_HOTBACKUP = \"$sqlHostName hotbackup $sqlUserPass $mysqlPort\"
 
-TABLE_POSTFIX = \" \"
+TABLE_POSTFIX = \"\"
 
 BIND_PORT               = $dbPort
 DB_SLEEP_MSEC           = 10
