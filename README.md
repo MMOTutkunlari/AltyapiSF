@@ -37,8 +37,8 @@ Server filesi git ile çekin.
 
 Derlediğiniz çekirdek dosyalarını filese tanımlayın
 > cd /home/AltyapiSF/share/bin                                                                                                                                         
-> ln -s /home/AltyapiSF/Srcs/Server/game/game_r40020 game                                                                                                               
-> ln -s /home/AltyapiSF/Srcs/Server/db/db_r400200 db
+> ln -s /home/AltyapiServer/Srcs/Server/game/game_r40020 game                                                                                                               
+> ln -s /home/AltyapiServer/Srcs/Server/db/db_r400200 db
 
 Server files kanallarının oluşturulması
 > cd /home/AltyapiSF                                                                                                                                                   
