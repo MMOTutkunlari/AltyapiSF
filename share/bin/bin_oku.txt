@@ -1,0 +1,3 @@
+game ve db dosyalarını bu klasör içerisine atın. Okuma ve yazma izni vermeyi unutmayın.
+
+https://www.mmotutkunlari.com/konu/s%C4%B1f%C4%B1rdan-altyap%C4%B1-filesi-g%C3%BCncelleme-rehberi-2025.23695/

@@ -1,11 +1,11 @@
 quest give_basic_weapon begin
 	state start begin
 		function basic_item(job,index)
-			item_list={}	
-			item_list[0] = {50187} 
-			item_list[1] = {50212}
-			item_list[2] = {50187}
-			item_list[3] = {50213}
+			item_list={}
+			item_list[0] = {19, 11209, 12209, 50187} --savasci
+			item_list[1] = {1009, 11409, 12349, 50212} --ninja
+			item_list[2] = {19, 11609, 12489, 50187} --sura
+			item_list[3] = {7009, 11809, 12629, 50213} --saman
 			return  item_list[job][index]
 		end
 
@@ -14,10 +14,26 @@ quest give_basic_weapon begin
 				pc.setqf("basic_weapon", 1)
 
 				if pc.countitem(item) == 0 and pc.weapon != item then
-					pc.give_item2(give_basic_weapon.basic_item(pc.job,1) )
+					horse.advance()
+					horse.set_level(11)
+					horse.summon()
+					
+					pc.set_skill_level(131, 10)
+					pc.set_skill_level(126, 20)
+					pc.set_skill_level(127, 20)
+					pc.set_skill_level(128, 20)
+					
+					pc.give_item2(give_basic_weapon.basic_item(pc.job, 1))
+					pc.give_item2(give_basic_weapon.basic_item(pc.job, 2))
+					pc.give_item2(give_basic_weapon.basic_item(pc.job, 3))
+					
+					ortak_item_list = {14009, 16009, 17009, 15009, 13009, 76022, 76005, 39036, 50052, 50188}
+					for i = 1, table.getn(ortak_item_list) do
+						pc.give_item2(ortak_item_list[i])
+					end					
 				end
 			end
 		end
-		end
-		end
+	end
+end
 

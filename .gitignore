@@ -7,7 +7,6 @@ game
 log
 auth
 cores
-bin
 
 *.core
 .svn

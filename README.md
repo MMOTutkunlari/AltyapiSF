@@ -2,10 +2,10 @@
 
 ### Hakkında ###
 Metin2 Sıfırdan Altyapı Server Files Hazırlama Rehberini hazırlarken oluşturduğum server files.                                                                                       
-Rehbere bakmak isterseniz: https://www.mmotutkunlari.com/konu/metin2-sifirdan-altyapi-server-files-hazirlama-rehberi.7141
+Rehbere bakmak isterseniz: https://www.mmotutkunlari.com/konu/s%C4%B1f%C4%B1rdan-altyap%C4%B1-filesi-g%C3%BCncelleme-rehberi-2025.23695/
 
 ### Nasıl Kurulur? ####
-Şuan için bu dosyalar Freebsd 13, Freebsd 12 veya 11.x ile çalışmaktadır. 
+Şuan için bu dosyalar Freebsd 14.x ile çalışmaktadır. 
 Ancak ilk önce server source dosyalarını derlemeniz gerekiyor: https://github.com/MMOTutkunlari/AltyapiServer
 
 #### Kurulması Gereken Paketler ####
@@ -14,7 +14,7 @@ Ancak ilk önce server source dosyalarını derlemeniz gerekiyor: https://github
 * openssl
 * python
 * git
-* gcc9
+* gcc15
 * gmake
 * makedepend
 * subversion
@@ -46,7 +46,7 @@ Server files kanallarının oluşturulması
 
 Questlerin derlenmesi
 > cd /home/AltyapiSF/share/locale/turkey/quest                                                                                                                         
-> sh gen.sh
+> sh make.sh
 
 Oyunu başlatmak
 > cd /home/AltyapiSF                                                                                                                                                   
